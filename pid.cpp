@@ -1,4 +1,5 @@
-#include"pid.h"
+#include<iostream>
+#include<cmath>
 float vertical_kp,vertical_ki,vertical_kd;
 // pid for stay state//
 int Vertical(float Expect,float Angle, float gyro)
@@ -15,6 +16,7 @@ float Velocity( float Expect_velocity,float velocityL,float velocityR )
   static int Err_lowout_last,intergate_save;
   float a=0.7;
   int Err,Err_lowout;
+  Err=error;
   Err_lowout=(1-a)*Err+a*Err_lowout_last;
   Err_lowout_last=Err_lowout;
   // intergate
