@@ -13,7 +13,3 @@ Studying the dynamic balance of a vehicle on two wheels is essential for future 
 ![image](https://github.com/zeolead/zeolead--real-time-embedded-team7/blob/main/Hardware%20Structure%20Design.jpg)
 ## Software
 ![image](https://github.com/zeolead/zeolead--real-time-embedded-team7/blob/main/Software%20Structure%20Design.jpg)
-
-
-# zeolead--real-time-embedded-team7
-for real time  embedded team7
