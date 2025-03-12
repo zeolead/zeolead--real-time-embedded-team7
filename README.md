@@ -9,7 +9,7 @@ Studying the dynamic balance of a vehicle on two wheels is essential for future 
 >* Low Latency and Fast Response
 >* Motor Control and Power Distribution
 >* System Integration and Debugging
-## Hardware
+## Hardware Structure Design
 ![image](https://github.com/zeolead/zeolead--real-time-embedded-team7/blob/main/Hardware%20Structure%20Design.jpg)
-## Software
+## Software Structure Design
 ![image](https://github.com/zeolead/zeolead--real-time-embedded-team7/blob/main/Software%20Structure%20Design.jpg)
