@@ -137,6 +137,13 @@ void MPU6050::run() {
 
     close(file);
 }
+void MPU6050::readdata(float &pitch, float &ax)
+{
+    float pitch_speed,accelerate_x;
+    std::lock_guard<std::mutex> lock(data_mutex);
+    pitch = this->pitch;
+    ax = this->ax_offset;
+}
 
 int sensor_start() {
     MPU6050 sensor;  // Create an MPU6050 object
