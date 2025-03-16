@@ -23,10 +23,14 @@ private:
     // Offsets for accelerometer and gyroscope
     float ax_offset, ay_offset, az_offset;
     float gx_offset, gy_offset, gz_offset;
+    float pitch;
     // low pass filter
     float low_pass_filter(float new_data, float old_data, float alpha);
     //read data from I2C
     int i2c_read_word(int fd, int addr);
+    //data locker
+    std::mutex data_mutex;  
+    
 
 public:
     MPU6050();  
@@ -34,7 +38,7 @@ public:
 
     // Starts a thread for data reading and processing
     void run();
-    
+    void readdata(float &pitch, float &ax);
 };
 // Function to start the sensor data reading thread
 int sensor_start();
