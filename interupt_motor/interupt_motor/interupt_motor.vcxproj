@@ -21,7 +21,9 @@
   <ItemGroup>
     <ClCompile Include="Dev_Config.cpp" />
     <ClCompile Include="DRV8825.cpp" />
-    <ClCompile Include="Motor.cpp" />
+    <ClCompile Include="MotorControl.cpp" />
+    <ClCompile Include="MotorControl.hpp" />
+    <ClCompile Include="motor_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Debug.hpp" />

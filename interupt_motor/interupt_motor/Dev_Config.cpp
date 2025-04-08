@@ -55,7 +55,7 @@ void DEV_Config::DEV_Digital_Write(UWORD Pin, UBYTE Value) {
 }
 
 void DEV_Config::DEV_Delay_ms(UDOUBLE xms) {
-    lguSleep(xms / 1000000.0);
+    lguSleep(xms / 1e6);
 }
 
 void DEV_Config::DEV_Delay_us(UDOUBLE xus) {

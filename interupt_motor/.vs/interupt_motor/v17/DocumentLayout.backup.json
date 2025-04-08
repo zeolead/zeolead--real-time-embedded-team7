@@ -7,12 +7,16 @@
       "RelativeMoniker": "D:0:0:{EE5002D2-37F2-41E3-84D0-163E0B4C1C41}|interupt_motor\\interupt_motor.vcxproj|solutionrelative:interupt_motor\\DRV8825.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{EE5002D2-37F2-41E3-84D0-163E0B4C1C41}|interupt_motor\\interupt_motor.vcxproj|F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\Dev_Config.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{EE5002D2-37F2-41E3-84D0-163E0B4C1C41}|interupt_motor\\interupt_motor.vcxproj|solutionrelative:interupt_motor\\Dev_Config.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EE5002D2-37F2-41E3-84D0-163E0B4C1C41}|interupt_motor\\interupt_motor.vcxproj|F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\DRV8825.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{EE5002D2-37F2-41E3-84D0-163E0B4C1C41}|interupt_motor\\interupt_motor.vcxproj|solutionrelative:interupt_motor\\DRV8825.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE5002D2-37F2-41E3-84D0-163E0B4C1C41}|interupt_motor\\interupt_motor.vcxproj|F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\Dev_Config.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{EE5002D2-37F2-41E3-84D0-163E0B4C1C41}|interupt_motor\\interupt_motor.vcxproj|solutionrelative:interupt_motor\\Dev_Config.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{EE5002D2-37F2-41E3-84D0-163E0B4C1C41}|interupt_motor\\interupt_motor.vcxproj|F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\Motor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{EE5002D2-37F2-41E3-84D0-163E0B4C1C41}|interupt_motor\\interupt_motor.vcxproj|solutionrelative:interupt_motor\\Motor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE5002D2-37F2-41E3-84D0-163E0B4C1C41}|interupt_motor\\interupt_motor.vcxproj|F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\DEV_Config.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -26,8 +30,22 @@
       "DocumentGroups": [
         {
           "DockedWidth": 65,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Motor.cpp",
+              "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\Motor.cpp",
+              "RelativeDocumentMoniker": "interupt_motor\\Motor.cpp",
+              "ToolTip": "F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\Motor.cpp",
+              "RelativeToolTip": "interupt_motor\\Motor.cpp",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-23T11:51:00.546Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -40,7 +58,7 @@
               "RelativeDocumentMoniker": "interupt_motor\\DRV8825.cpp",
               "ToolTip": "F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\DRV8825.cpp",
               "RelativeToolTip": "interupt_motor\\DRV8825.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-23T10:24:22.106Z",
               "EditorCaption": ""
@@ -48,30 +66,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Dev_Config.cpp",
-              "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\Dev_Config.cpp",
-              "RelativeDocumentMoniker": "interupt_motor\\Dev_Config.cpp",
-              "ToolTip": "F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\Dev_Config.cpp",
-              "RelativeToolTip": "interupt_motor\\Dev_Config.cpp",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-19T18:21:02.905Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "DRV8825.hpp",
               "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\DRV8825.hpp",
               "RelativeDocumentMoniker": "interupt_motor\\DRV8825.hpp",
               "ToolTip": "F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\DRV8825.hpp",
               "RelativeToolTip": "interupt_motor\\DRV8825.hpp",
-              "ViewState": "AgIAACMAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-03-23T10:39:15.595Z"
+              "WhenOpened": "2025-03-23T10:39:15.595Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
+              "Title": "Dev_Config.cpp",
+              "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\Dev_Config.cpp",
+              "RelativeDocumentMoniker": "interupt_motor\\Dev_Config.cpp",
+              "ToolTip": "F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\Dev_Config.cpp",
+              "RelativeToolTip": "interupt_motor\\Dev_Config.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-19T18:21:02.905Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "DEV_Config.hpp",
               "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\interupt_motor\\interupt_motor\\DEV_Config.hpp",
               "RelativeDocumentMoniker": "interupt_motor\\DEV_Config.hpp",

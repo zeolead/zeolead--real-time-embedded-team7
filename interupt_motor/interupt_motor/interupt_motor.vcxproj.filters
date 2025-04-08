@@ -21,7 +21,13 @@
     <ClCompile Include="DRV8825.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Motor.cpp">
+    <ClCompile Include="MotorControl.hpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MotorControl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="motor_main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
