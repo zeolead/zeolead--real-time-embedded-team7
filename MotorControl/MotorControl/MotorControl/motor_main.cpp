@@ -27,23 +27,30 @@ int main() {
     MotorControl motor2(DRV8825::MOTOR2);
 
     motor1.SetDirection(DRV8825::BACKWARD);
-    motor1.setRPM(100);
-    motor2.SetDirection(DRV8825::FORWARD);
-    motor2.setRPM(100);
+    motor1.setRPM(80);
+    //motor2.SetDirection(DRV8825::FORWARD);
+    //motor2.setRPM(100);
 
     motor1.start();
-    motor2.start();
+    //motor2.start();
 
+   // rpm   tune
+   //  80      C4
+   //  90      D4
+   //2340     F5
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     motor1.setRPM(2340);
-    motor2.setRPM(2340);
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    //motor2.setRPM(2340);
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     motor1.stop();
-    motor2.stop();
+    //motor2.stop();
 
-    DEV_Config::DEV_ModuleExit();
+    //DEV_Config::DEV_ModuleExit();
     return 0;
 }

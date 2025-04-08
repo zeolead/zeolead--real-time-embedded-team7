@@ -14,10 +14,7 @@ constexpr std::array<const char*, 6> microstepmode = {
 *DRV8825::SelectMotor(DRV8825::MOTOR1)
 */
 
-DRV8825::Motor* DRV8825::current_motor_ = nullptr;
-
 void DRV8825::SelectMotor(Motor& motor, UBYTE name) {
-    current_motor_ = &motor;
     motor.Name = name;
     if (name == MOTOR1) {
         motor.EnablePin = DEV_Config::M1_ENABLE_PIN;
@@ -44,14 +41,14 @@ void DRV8825::SelectMotor(Motor& motor, UBYTE name) {
  * The motor stops rotating and the driver chip is disabled.
  *
  */
-void DRV8825::Enable() {
-    Debug::Log("Enable() called for motor %d\n", current_motor_->Name);
-    DEV_Config::DEV_Digital_Write(current_motor_->EnablePin, 1);
+void DRV8825::Enable(Motor& motor) {
+    Debug::Log("Enable() called for motor %d\n", motor.Name);
+    DEV_Config::DEV_Digital_Write(motor.EnablePin, 1);
 }
 
-void DRV8825::Stop() {
-    Debug::Log("Stop() called for motor %d\n", current_motor_ -> Name);
-    DEV_Config::DEV_Digital_Write(current_motor_ -> EnablePin, 0);
+void DRV8825::Stop(Motor& motor) {
+    Debug::Log("Stop() called for motor %d\n", motor.Name);
+    DEV_Config::DEV_Digital_Write(motor.EnablePin, 0);
 }
 
 void DRV8825::SetMicroStep(Motor& motor, char mode, const char* stepformat) {
@@ -79,22 +76,21 @@ void DRV8825::SetMicroStep(Motor& motor, char mode, const char* stepformat) {
 void DRV8825::TurnStep(Motor& motor, UBYTE dir, UWORD steps, UWORD stepdelay) {
     motor.Dir = dir;
     if (dir == FORWARD) {
-        Debug::Log("motor %d forward\n", motor.Name);
+        //Debug::Log("motor %d forward\n", motor.Name);
         DEV_Config::DEV_Digital_Write(motor.DirPin, 0);
     }
     else if (dir == BACKWARD) {
-        Debug::Log("motor %d backward\n", motor.Name);
+        //Debug::Log("motor %d backward\n", motor.Name);
         DEV_Config::DEV_Digital_Write(motor.DirPin, 1);
     }
     else {
         Debug::Log("Invalid direction: %d, calling Stop()\n", dir);
-        Stop();
         return;
     }
 
     if (steps == 0) return;
 
-    Debug::Log("turn delay %d \n", stepdelay);
+    //Debug::Log("turn delay %d \n", stepdelay);
     for (UWORD i = 0; i < steps; i++) {
         DEV_Config::DEV_Digital_Write(motor.StepPin, 1);
         DEV_Config::DEV_Delay_ms(stepdelay);

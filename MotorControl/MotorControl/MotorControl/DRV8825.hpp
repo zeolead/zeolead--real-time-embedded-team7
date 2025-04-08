@@ -25,13 +25,10 @@ public:
     };
 
     static void SelectMotor(Motor& motor, UBYTE name);
-    static void Enable();
-    static void Stop();
+    static void Enable(Motor& motor);
+    static void Stop(Motor& motor);
     static void SetMicroStep(Motor& motor, char mode, const char* stepformat);
     static void TurnStep(Motor& motor, UBYTE dir, UWORD steps, UWORD stepdelay);
-    
-private:
-    static Motor* current_motor_;
 };
 
 #endif // DRV8825_HPP_

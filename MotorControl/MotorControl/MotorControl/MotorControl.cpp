@@ -16,23 +16,26 @@ void MotorControl::start() {
 	running_ = true;
 
 	DRV8825::SelectMotor(motor_, motor_id_);
-	DRV8825::Enable();
-	
+	DRV8825::Enable(motor_);
+	Debug::Log("motor %d, start\n",motor_id_);
 	control_thread_ = std::thread(&MotorControl::Run, this);
 }
 
 void MotorControl::stop() {
-	std::lock_guard<std::mutex> lock(mutex_);
-	running_ = false;
+	{
+		std::lock_guard<std::mutex> lock(mutex_);
+		running_ = false;
+	}
 	if (control_thread_.joinable()) {
 		control_thread_.join();
 	}
-	DRV8825::Stop();
+	DRV8825::Stop(motor_);
 }
 
 void MotorControl::setRPM(float rpm) {
 	std::lock_guard<std::mutex> lock(mutex_);
 	rpm_ = rpm;
+	Debug::Log("set rpm %f for motor %d\n", rpm,motor_id_);
 }
 
 void MotorControl::SetDirection(UBYTE dir) {

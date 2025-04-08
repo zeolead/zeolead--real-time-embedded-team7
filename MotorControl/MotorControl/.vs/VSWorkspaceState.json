@@ -16,7 +16,7 @@
       "out\\-447637990\\install\\linux-debug"
     ]
   },
-  "ActiveTargetSystem": "Local Machine",
+  "ActiveTargetSystem": "172.20.10.3",
   "MRUPresetsPerTargetSystem": {
     "Local Machine": {
       "configure": "x64-debug"
@@ -29,6 +29,6 @@
     "",
     "\\MotorControl"
   ],
-  "SelectedNode": "\\CMakeLists.txt",
+  "SelectedNode": "\\MotorControl\\DRV8825.cpp",
   "PreviewInSolutionExplorer": false
 }
