@@ -15,6 +15,7 @@
 # '1/8step': A cycle = 200 * 8 steps
 # '1/16step': A cycle = 200 * 16 steps
 # '1/32step': A cycle = 200 * 32 steps
+# Max Rpm for sure : 234 rpm  , higher speed might works
 */
 
 int main() {
@@ -26,31 +27,29 @@ int main() {
     MotorControl motor1(DRV8825::MOTOR1);
     MotorControl motor2(DRV8825::MOTOR2);
 
-    motor1.SetDirection(DRV8825::BACKWARD);
-    motor1.setRPM(80);
-    //motor2.SetDirection(DRV8825::FORWARD);
-    //motor2.setRPM(100);
+    motor1.setRPM(234);
+    motor2.setRPM(10);
 
     motor1.start();
-    //motor2.start();
+    motor2.start();
 
    // rpm   tune
-   //  80      C4
-   //  90      D4
-   //2340     F5
+   //  8      C4
+   //  9      D4
+   //234     F5
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    motor1.setRPM(2340);
+    motor1.setRPM(-234);
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    //motor2.setRPM(2340);
+    motor2.setRPM(234);
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
     motor1.stop();
-    //motor2.stop();
+    motor2.stop();
 
-    //DEV_Config::DEV_ModuleExit();
+    DEV_Config::DEV_ModuleExit();
     return 0;
 }
