@@ -18,11 +18,21 @@
 # Max Rpm for sure : 234 rpm  , higher speed might works
 */
 
+void Handler(int sig) {
+    std::cout << "\nHandler: Motor Stop" << std::endl;
+    DEV_Config::DEV_ModuleExit();
+    exit(0);
+}
+
 int main() {
+
     //1.System Initialization
     if (DEV_Config::DEV_ModuleInit()) {
         return 0;
     }
+
+    // Exception handling:ctrl + c
+    std::signal(SIGINT, Handler);
 
     MotorControl motor1(DRV8825::MOTOR1);
     MotorControl motor2(DRV8825::MOTOR2);
