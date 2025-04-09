@@ -6,8 +6,6 @@
 #include <cstring>
 #include <array>
 
-DRV8825::Motor motor = {};
-
 constexpr std::array<const char*, 6> microstepmode = {
     "fullstep", "halfstep", "1/4step", "1/8step", "1/16step", "1/32step"
 };
@@ -16,7 +14,7 @@ constexpr std::array<const char*, 6> microstepmode = {
 *DRV8825::SelectMotor(DRV8825::MOTOR1)
 */
 
-void DRV8825::SelectMotor(UBYTE name) {
+void DRV8825::SelectMotor(Motor& motor, UBYTE name) {
     motor.Name = name;
     if (name == MOTOR1) {
         motor.EnablePin = DEV_Config::M1_ENABLE_PIN;
@@ -43,15 +41,17 @@ void DRV8825::SelectMotor(UBYTE name) {
  * The motor stops rotating and the driver chip is disabled.
  *
  */
-void DRV8825::Enable() {
-    DEV_Config::DEV_Digital_Write(motor.EnablePin, 0);
-}
-
-void DRV8825::Stop() {
+void DRV8825::Enable(Motor& motor) {
+    Debug::Log("Enable() called for motor %d\n", motor.Name);
     DEV_Config::DEV_Digital_Write(motor.EnablePin, 1);
 }
 
-void DRV8825::SetMicroStep(char mode, const char* stepformat) {
+void DRV8825::Stop(Motor& motor) {
+    Debug::Log("Stop() called for motor %d\n", motor.Name);
+    DEV_Config::DEV_Digital_Write(motor.EnablePin, 0);
+}
+
+void DRV8825::SetMicroStep(Motor& motor, char mode, const char* stepformat) {
     if (mode == HARDWARE) {
         Debug::Log("use hardware control\n");
         return;
@@ -73,24 +73,24 @@ void DRV8825::SetMicroStep(char mode, const char* stepformat) {
     }
 }
 
-void DRV8825::TurnStep(UBYTE dir, UWORD steps, UWORD stepdelay) {
+void DRV8825::TurnStep(Motor& motor, UBYTE dir, UWORD steps, UWORD stepdelay) {
     motor.Dir = dir;
     if (dir == FORWARD) {
-        Debug::Log("motor %d forward\n", motor.Name);
+        //Debug::Log("motor %d forward\n", motor.Name);
         DEV_Config::DEV_Digital_Write(motor.DirPin, 0);
     }
     else if (dir == BACKWARD) {
-        Debug::Log("motor %d backward\n", motor.Name);
+        //Debug::Log("motor %d backward\n", motor.Name);
         DEV_Config::DEV_Digital_Write(motor.DirPin, 1);
     }
     else {
-        Stop();
+        Debug::Log("Invalid direction: %d, calling Stop()\n", dir);
         return;
     }
 
     if (steps == 0) return;
 
-    Debug::Log("turn %d steps\n", steps);
+    //Debug::Log("turn delay %d \n", stepdelay);
     for (UWORD i = 0; i < steps; i++) {
         DEV_Config::DEV_Digital_Write(motor.StepPin, 1);
         DEV_Config::DEV_Delay_ms(stepdelay);

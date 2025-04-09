@@ -66,7 +66,7 @@ void MotorControl::Run() {
 		}
 		int delay_us = static_cast<int>(60 * 1e5 / (current_rpm * steps_per_rev));
 		// 发出一步脉冲
-		DRV8825::TurnStep(motor_, dir, 1, delay_us);  // 我们来控制外部延迟
+		DRV8825::TurnStep(motor_, dir, 1, delay_us); 
 		// 计算下一次应该发步的时间点
 		next_time += std::chrono::microseconds(delay_us);
 		// 睡到那个时间（保证准确节奏）

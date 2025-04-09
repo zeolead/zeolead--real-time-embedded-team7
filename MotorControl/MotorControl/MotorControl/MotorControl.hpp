@@ -4,6 +4,7 @@
 #include <thread>
 #include <atomic>
 #include<mutex>
+
 #include "Debug.hpp"
 #include "DEV_Config.hpp"
 #include "DRV8825.hpp"
@@ -18,9 +19,10 @@ public:
 	void stop();                                  //停止线程
 	void setRPM(float rpm);               //实时设置转速
 	//void SetDirection(UBYTE dir);     //设置方向
+	void Run();                      //线程函数，持续发出脉冲
+
 private:
 	DRV8825::Motor motor_;                  // 每个控制器维护自己的电机引脚配置
-	void Run();                      //线程函数，持续发出脉冲
 	
 	UBYTE motor_id_;
 	std::mutex mutex_;
