@@ -2,12 +2,17 @@
 #include <thread>
 #include <mutex>
 #include <cmath>
+#include <csignal>
 #include <unistd.h>
 #include "mpu6050_test001.hpp"
 #include "PID.hpp"
 #include "MotorControl.hpp"
 
-
+void Handler(int sig) {
+    std::cout << "\nHandler: Manual Stop" << std::endl;
+    DEV_Config::DEV_ModuleExit();
+    exit(0);
+}
 
 
 int main() {
@@ -15,18 +20,22 @@ int main() {
     // initialize
     MPU6050 mpu;
     PID pid;
+    if (DEV_Config::DEV_ModuleInit()) {
+        return 0;
+    }
+    std::signal(SIGINT,Handler);
     MotorControl motor1(DRV8825::MOTOR1);
     MotorControl motor2(DRV8825::MOTOR2);
+    motor1.setRPM(100);
+    motor2.setRPM(100);
     
 
     mpu.setCallback([&](float pitch, float ax, float gx) {
         pid.receiveSensorData(pitch, ax, gx); 
-        std::cout << "recieve data" << std::endl;
     });
     
     pid.setOutputCallback([&](float output) {
         int rpm = std::abs(static_cast<int>(output));
-    
         motor1.setRPM(rpm);
         motor2.setRPM(rpm);
         

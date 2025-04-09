@@ -65,28 +65,10 @@ void MotorControl::Run() {
 			continue;
 		}
 		int delay_us = static_cast<int>(60 * 1e5 / (current_rpm * steps_per_rev));
-		// 发出一步脉冲
+	
 		DRV8825::TurnStep(motor_, dir, 1, delay_us); 
-		// 计算下一次应该发步的时间点
+
 		next_time += std::chrono::microseconds(delay_us);
-		// 睡到那个时间（保证准确节奏）
 		std::this_thread::sleep_until(next_time);
 	}
 }
-
-
-//void MotorControl::Run() {
-//	constexpr int steps_per_rev = 800;    //每圈步数
-//	while (running_) {
-//		std::lock_guard<std::mutex> lock(mutex_);
-//		float current_rpm = rpm_;
-//		if (current_rpm <= 0) {
-//			std::this_thread::sleep_for(std::chrono::milliseconds(1));
-//			continue;
-//		}
-//
-//		// 计算步进间隔时间（us）
-//		int delay_us = static_cast<int>(60 * 1e5 / (current_rpm * steps_per_rev));
-//		DRV8825::TurnStep(motor_, direction_, 1, delay_us); // 转一步
-//	}
-//}

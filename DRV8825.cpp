@@ -76,11 +76,9 @@ void DRV8825::SetMicroStep(Motor& motor, char mode, const char* stepformat) {
 void DRV8825::TurnStep(Motor& motor, UBYTE dir, UWORD steps, UWORD stepdelay) {
     motor.Dir = dir;
     if (dir == FORWARD) {
-        //Debug::Log("motor %d forward\n", motor.Name);
         DEV_Config::DEV_Digital_Write(motor.DirPin, 0);
     }
     else if (dir == BACKWARD) {
-        //Debug::Log("motor %d backward\n", motor.Name);
         DEV_Config::DEV_Digital_Write(motor.DirPin, 1);
     }
     else {
@@ -90,7 +88,6 @@ void DRV8825::TurnStep(Motor& motor, UBYTE dir, UWORD steps, UWORD stepdelay) {
 
     if (steps == 0) return;
 
-    //Debug::Log("turn delay %d \n", stepdelay);
     for (UWORD i = 0; i < steps; i++) {
         DEV_Config::DEV_Digital_Write(motor.StepPin, 1);
         DEV_Config::DEV_Delay_ms(stepdelay);

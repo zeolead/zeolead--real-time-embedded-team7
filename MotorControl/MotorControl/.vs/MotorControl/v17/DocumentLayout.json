@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\MotorControl\\motor_main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MotorControl\\motor_main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\MotorControl\\DRV8825.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MotorControl\\DRV8825.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\MotorControl\\DRV8825.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MotorControl\\DRV8825.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\MotorControl\\motor_main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MotorControl\\motor_main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\MotorControl\\MotorControl.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 708,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,13 +38,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "motor_main.cpp",
               "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\MotorControl\\motor_main.cpp",
               "RelativeDocumentMoniker": "MotorControl\\motor_main.cpp",
               "ToolTip": "F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\MotorControl\\motor_main.cpp",
               "RelativeToolTip": "MotorControl\\motor_main.cpp",
-              "ViewState": "AgIAACUAAAAAAAAAAAAYwCsAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACEAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-04-07T15:26:45.307Z",
               "EditorCaption": ""
@@ -59,12 +59,11 @@
               "RelativeToolTip": "MotorControl\\MotorControl.hpp",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAABUAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-04-07T14:14:48.948Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T14:14:48.948Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MotorControl.cpp",
               "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\MotorControl\\MotorControl.cpp",
               "RelativeDocumentMoniker": "MotorControl\\MotorControl.cpp",
@@ -72,12 +71,11 @@
               "RelativeToolTip": "MotorControl\\MotorControl.cpp",
               "ViewState": "AgIAADMAAAAAAAAAAAAAAEQAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-04-07T14:14:51.188Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T14:14:51.188Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "DRV8825.cpp",
               "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\MotorControl\\DRV8825.cpp",
               "RelativeDocumentMoniker": "MotorControl\\DRV8825.cpp",
@@ -90,7 +88,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "DRV8825.hpp",
               "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\zeolead--real-time-embedded-team7\\MotorControl\\MotorControl\\MotorControl\\DRV8825.hpp",
               "RelativeDocumentMoniker": "MotorControl\\DRV8825.hpp",
@@ -98,8 +96,7 @@
               "RelativeToolTip": "MotorControl\\DRV8825.hpp",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-04-07T16:02:25.193Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-07T16:02:25.193Z"
             }
           ]
         },
@@ -107,10 +104,6 @@
           "DockedHeight": 274,
           "SelectedChildIndex": -1,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:5:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"

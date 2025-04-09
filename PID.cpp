@@ -24,6 +24,11 @@ float PID::Vertical(float Expect, float Angle, float gyro_x)
 
 float PID::Velocity(float angle_pid_output)
 {
+    std::cout << "[PID] Velocity called" << std::endl;
+
+    float estimated_velocity = last_motor_output; 
+    float error = estimated_velocity - angle_pid_output;
+
     float estimated_velocity = last_motor_output; 
     float error = estimated_velocity - angle_pid_output;
 
@@ -42,6 +47,7 @@ float PID::Velocity(float angle_pid_output)
     last_motor_output = motor_output;
     if (outputCallback) {
         outputCallback(motor_output);}
+    std::cout << "[PID] motor_output = " << motor_output << std::endl;
     return motor_output;
 }
 
@@ -52,6 +58,6 @@ void PID::receiveSensorData(float pitch, float ax, float gx) {
     float vertical_output = Vertical(0.0f, pitch, gx);  
     float velocity_output = Velocity(vertical_output);
     if (outputCallback) {
-      outputCallback(velocity_output);
+        outputCallback(velocity_output);
     }
 }
