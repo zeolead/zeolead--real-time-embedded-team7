@@ -20,8 +20,8 @@
 // Constructor
 MPU6050::MPU6050() {
     file = -1;  // Initialize the I2C file descriptor
-    ax_offset = ay_offset = az_offset = 0.0f;
-    gx_offset = gy_offset = gz_offset = 0.0f;
+    ay_offset = az_offset = 0.0f;
+    gx_offset = 0.0f;
 }
 
 // Destructor
@@ -69,8 +69,8 @@ void MPU6050::run() {
     float gx_offset = 0.0;
     const int num_samples = 100;
     for (int i = 0; i < num_samples; i++) {
-        ay_offset += i2c_read_word(file, ACCEL_XOUT_H + 2) / 16384.0;
-        az_offset += i2c_read_word(file, ACCEL_XOUT_H + 4) / 16384.0;
+        ay_offset += i2c_read_word(file, ACCEL_YOUT_H) / 16384.0;
+        az_offset += i2c_read_word(file, ACCEL_ZOUT_H) / 16384.0;
         gx_offset += i2c_read_word(file, GYRO_XOUT_H) / 131.0;
         usleep(5000);
     }
@@ -90,8 +90,8 @@ void MPU6050::run() {
     // Start reading data and calculating
     while (true) {
         // Read  data
-        int accel_y = i2c_read_word(file, ACCEL_XOUT_H + 2);
-        int accel_z = i2c_read_word(file, ACCEL_XOUT_H + 4);
+        int accel_y = i2c_read_word(file, ACCEL_YOUT_H);
+        int accel_z = i2c_read_word(file, ACCEL_ZOUT_H);
         int gyro_x = i2c_read_word(file, GYRO_XOUT_H);
 
         // Convert data 
