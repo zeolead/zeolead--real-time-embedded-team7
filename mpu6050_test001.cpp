@@ -52,6 +52,7 @@ void MPU6050::run() {
     }
     if (ioctl(file, I2C_SLAVE, MPU6050_ADDR) < 0) {
         std::cerr << "Unable to connect to MPU6050" << std::endl;
+        close(file);
         return;
     }
 
@@ -64,24 +65,18 @@ void MPU6050::run() {
     write(file, dlpf_cfg, 2);
 
     // Accelerometer and gyroscope bias calibration
-    float ax_offset = 0.0, ay_offset = 0.0, az_offset = 0.0;
-    float gx_offset = 0.0, gy_offset = 0.0, gz_offset = 0.0;
+    float ay_offset = 0.0, az_offset = 0.0;
+    float gx_offset = 0.0;
     const int num_samples = 100;
     for (int i = 0; i < num_samples; i++) {
-        ax_offset += i2c_read_word(file, ACCEL_XOUT_H) / 16384.0;
         ay_offset += i2c_read_word(file, ACCEL_XOUT_H + 2) / 16384.0;
         az_offset += i2c_read_word(file, ACCEL_XOUT_H + 4) / 16384.0;
         gx_offset += i2c_read_word(file, GYRO_XOUT_H) / 131.0;
-        gy_offset += i2c_read_word(file, GYRO_XOUT_H + 2) / 131.0;
-        gz_offset += i2c_read_word(file, GYRO_XOUT_H + 4) / 131.0;
         usleep(5000);
     }
-    ax_offset /= num_samples;
     ay_offset /= num_samples;
     az_offset /= num_samples;
     gx_offset /= num_samples;
-    gy_offset /= num_samples;
-    gz_offset /= num_samples;
 
     // Initialize 
     float pitch = 0.0, roll = 0.0;
@@ -95,45 +90,31 @@ void MPU6050::run() {
     // Start reading data and calculating
     while (true) {
         // Read  data
-        int accel_x = i2c_read_word(file, ACCEL_XOUT_H);
         int accel_y = i2c_read_word(file, ACCEL_XOUT_H + 2);
         int accel_z = i2c_read_word(file, ACCEL_XOUT_H + 4);
         int gyro_x = i2c_read_word(file, GYRO_XOUT_H);
-        int gyro_y = i2c_read_word(file, GYRO_XOUT_H + 2);
-        int gyro_z = i2c_read_word(file, GYRO_XOUT_H + 4);
 
         // Convert data 
-        float ax = accel_x / 16384.0 - ax_offset;
         float ay = accel_y / 16384.0 - ay_offset;
         float az = accel_z / 16384.0 - az_offset;
         float gx = (gyro_x / 131.0) - gx_offset;
-        float gy = (gyro_y / 131.0) - gy_offset;
-        float gz = (gyro_z / 131.0) - gz_offset;
 
         // Calculate accelerometer tilt angles （Pitch and Roll）
         float accel_pitch = atan2(ay, az) * 180.0 / M_PI;
-        float accel_roll = atan2(ax, az) * 180.0 / M_PI;
-
-        // Use gyroscope angular velocity to update angles
-        gyro_pitch += gx * dt;
-        gyro_roll += gy * dt;
 
         // Complementary filter: combine accelerometer and gyroscope data
-        pitch = 0.90 * (accel_pitch) + 0.10 * (gyro_pitch);  // Increase accelerometer weight
-        roll = 0.90 * (accel_roll) + 0.10 * (gyro_roll);
+        pitch = 0.98 * (pitch + gx * dt) + 0.02 * accel_pitch;  // Increase accelerometer weight
 
         // Smoothing
         pitch = low_pass_filter(pitch, prev_pitch, FILTER_ALPHA);
-        roll = low_pass_filter(roll, prev_roll, FILTER_ALPHA);
 
         prev_pitch = pitch;
-        prev_roll = roll;
 
         // Output the calculated pitch and the forward/backward acceleration (ax)
         std::lock_guard<std::mutex> guard(data_mutex);  // Mutex to protect shared std::cout
-        std::cout << "Pitch: " << pitch << "°  F/B acceleration (ax): " << ax << " g" << std::endl;
-        if (callback) callback(pitch, ax,gx);
-        usleep(500000);  // Delay 500ms
+        std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
+        if (callback) callback(pitch, ay, gx);    //Why callback gx?
+        usleep(10000);  // Delay 10ms
     }
 
     close(file);
