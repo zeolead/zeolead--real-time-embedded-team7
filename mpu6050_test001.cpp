@@ -11,7 +11,9 @@
 
 #define MPU6050_ADDR 0x68
 #define PWR_MGMT_1 0x6B
-#define ACCEL_XOUT_H 0x3B
+
+#define ACCEL_YOUT_H 0x3D
+#define ACCEL_ZOUT_H 0x3F
 #define GYRO_XOUT_H  0x43
 
 
@@ -28,12 +30,12 @@ MPU6050::~MPU6050() {
         close(file);
     }
 }
-int MPU6050::i2c_read_word(int fd, int addr) {
+int16_t MPU6050::i2c_read_word(int fd, int addr) {
     unsigned char buf[2];
     buf[0] = addr;
     if (write(fd, buf, 1) != 1) return -1;
     if (read(fd, buf, 2) != 2) return -1;
-    return (buf[0] << 8) | buf[1];
+    return (int16_t)(buf[0] << 8) | buf[1];
 }
 
 // Low pass filter
