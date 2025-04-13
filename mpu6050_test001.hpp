@@ -28,9 +28,9 @@ private:
     // low pass filter
     float low_pass_filter(float new_data, float old_data, float alpha);
     //read data from I2C
-    int i2c_read_word(int fd, int addr);
+    int16_t  i2c_read_word(int fd, int addr);
     // callback
-    std::function<void(float, float,float)> callback;  
+    std::function<void(float, float)> callback;  
     //data locker
     std::mutex data_mutex;  
     
@@ -41,7 +41,7 @@ public:
 
     // Starts a thread for data reading and processing
     void run();
-    void setCallback(const std::function<void(float, float,float)>& cb);
+    void setCallback(const std::function<void(float, float)>& cb);
 };
 // Function to start the sensor data reading thread
 int sensor_start();

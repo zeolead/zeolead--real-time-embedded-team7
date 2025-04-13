@@ -113,13 +113,13 @@ void MPU6050::run() {
         // Output the calculated pitch and the forward/backward acceleration (ax)
         std::lock_guard<std::mutex> guard(data_mutex);  // Mutex to protect shared std::cout
         std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
-        if (callback) callback(pitch, ay, gx);    //Why callback gx?
+        if (callback) callback(pitch, ay);    //Why callback gx?
         usleep(10000);  // Delay 10ms
     }
 
     close(file);
 }
-void MPU6050::setCallback(const std::function<void(float, float, float)>& cb) {
+void MPU6050::setCallback(const std::function<void(float, float)>& cb) {
     std::lock_guard<std::mutex> lock(data_mutex);
     callback = cb;
 }

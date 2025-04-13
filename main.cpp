@@ -26,18 +26,16 @@ int main() {
     std::signal(SIGINT,Handler);
     MotorControl motor1(DRV8825::MOTOR1);
     MotorControl motor2(DRV8825::MOTOR2);
-    motor1.setRPM(100);
-    motor2.setRPM(100);
     
 
-    mpu.setCallback([&](float pitch, float ax, float gx) {
-        pid.receiveSensorData(pitch, ax, gx); 
+    mpu.setCallback([&](float pitch, float ax) {
+        pid.receiveSensorData(pitch, ax); 
     });
     
     pid.setOutputCallback([&](float output) {
-        int rpm = std::abs(static_cast<int>(output));
+        int rpm = std::static_cast<int>(output);
         motor1.setRPM(rpm);
-        motor2.setRPM(rpm);
+        motor2.setRPM(-rpm);
         
     });
     
