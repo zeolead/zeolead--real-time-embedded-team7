@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+  <title>控制界面</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-areas:
+        ". fwd ."
+        "left stop right"
+        ". bwd .";
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 15px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #FWD { grid-area: fwd; }
+    #BWD { grid-area: bwd; }
+    #LEFT { grid-area: left; }
+    #RIGHT { grid-area: right; }
+    #STOP { grid-area: stop; }
+
+    #TEST {
+      background-color: #28a745;
+      margin-bottom: 20px;
+    }
+
+    #TEST:hover {
+      background-color: #1e7e34;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>控制面板</h1>
+  <button id="TEST">🔌 测试连接</button>
+
+  <div class="controls">
+    <button id="FWD">⬆️ 前进</button>
+    <button id="LEFT">⬅️ 左转</button>
+    <button id="STOP">⏹ 停止</button>
+    <button id="RIGHT">➡️ 右转</button>
+    <button id="BWD">⬇️ 后退</button>
+  </div>
+
+  <div id="status">状态：等待操作</div>
+  <div id="latency">时延：--</div>
+
+  <script src="remote.js"></script>
+
+</body>
+</html>
