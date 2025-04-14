@@ -79,12 +79,12 @@ void MPU6050::run() {
     gx_offset /= num_samples;
 
     // Initialize 
-    float pitch = 0.0, roll = 0.0;
-    float gyro_pitch = 0.0, gyro_roll = 0.0;
-    float dt = 0.01;  // Time interval 10ms
+    float pitch = 0.0;
+    float gyro_pitch = 0.0;
+    float dt = 0.001;  // Time interval 10ms
 
     //Initialize low pass filter parameters
-    float prev_pitch = 0.0, prev_roll = 0.0;
+    float prev_pitch = 0.0;
     const float FILTER_ALPHA = 0.7;  // Adjust accelerometer and gyroscope weights
 
     // Start reading data and calculating
@@ -96,17 +96,18 @@ void MPU6050::run() {
         int accel_y = i2c_read_word(file, ACCEL_YOUT_H);
         int accel_z = i2c_read_word(file, ACCEL_ZOUT_H);
         int gyro_x = i2c_read_word(file, GYRO_XOUT_H);
+    
 
         // Convert data 
         float ay = accel_y / 16384.0 - ay_offset;
-        float az = accel_z / 16384.0 - az_offset;
+        float az = -(accel_z / 16384.0 - az_offset);
         float gx = (gyro_x / 131.0) - gx_offset;
 
         // Calculate accelerometer tilt angles （Pitch and Roll）
-        float accel_pitch = atan2(ay, az) * 180.0 / M_PI;
+        float accel_pitch = atan2(accel_y-0.01, -accel_z-0.17) * 180.0 / M_PI;
 
         // Complementary filter: combine accelerometer and gyroscope data
-        pitch = 0.98 * (pitch + gx * dt) + 0.02 * accel_pitch;  // Increase accelerometer weight
+        pitch = 0.982 * pitch + 0.98 * (gx * dt) + 0.02 * accel_pitch;  // Increase accelerometer weight
 
         // Smoothing
         pitch = low_pass_filter(pitch, prev_pitch, FILTER_ALPHA);
@@ -116,11 +117,19 @@ void MPU6050::run() {
         // Output the calculated pitch and the forward/backward acceleration (ax)
         std::lock_guard<std::mutex> guard(data_mutex);  // Mutex to protect shared std::cout
         std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
+<<<<<<< HEAD
         if (callback) callback(pitch, ay);    //Why callback gx?
 
         //actual delay
         next_time += std::chrono::microseconds(10000);
         std::this_thread::sleep_until(next_time); // Delay 10ms
+=======
+        std::cout << "gx: " << gx << "°  a_p " << accel_pitch << std::endl;
+        std::cout << "az: " << az << "  az_offset " << az_offset <<  "  accel_z " << -accel_z/16384.0 << std::endl;
+        std::cout << "ay: " << ay << "  ay_offset " << ay_offset << "  accel_y " << accel_y/16384.0 << std::endl;
+        if (callback) callback(pitch, ay);
+        usleep(1000);  // Delay 10ms
+>>>>>>> b4a47b0b5dbb39bbae9b81484cba75d365ff62f8
     }
 
     close(file);
