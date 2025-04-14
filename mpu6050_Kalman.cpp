@@ -1,3 +1,8 @@
+// Kalman Filter
+//           陀螺仪（漂移） ----> 预测角度
+//                                  |
+// 测量角度（加速度） ---------> 校正（融合）--------> 当前估计角度
+
 #include <iostream>
 #include <fcntl.h>
 #include <unistd.h>
@@ -41,9 +46,9 @@ int16_t MPU6050::i2c_read_word(int fd, int addr) {
 
 // 卡尔曼滤波器结构
 struct KalmanFilter {
-    float Q_angle;  // 过程噪声方差（加速度计）
-    float Q_gyro;   // 过程噪声方差（陀螺仪）
-    float R_angle;  // 测量噪声方差
+    float Q_angle;  // （角度变化）过程噪声方差（加速度计）
+    float Q_gyro;   // 过程噪声方差（陀螺仪漂移过程噪声）
+    float R_angle;  // 测量（加速度计）噪声方差
     float angle;     // 当前角度估算
     float bias;      // 当前偏差估算
     float P[2][2];   // 误差协方差矩阵
@@ -92,7 +97,7 @@ float MPU6050::low_pass_filter(float new_data, float old_data, float alpha) {
 
 
 void MPU6050::run() {
-    int file = open("/dev/i2c-1", O_RDWR);  // Open I2C device
+    file = open("/dev/i2c-1", O_RDWR);  // Open I2C device
     if (file < 0) {
         std::cerr << "Unable to open I2C device" << std::endl;
         return;
@@ -134,10 +139,6 @@ void MPU6050::run() {
     
     float dt = 0.01;  // Time interval 10ms
 
-    //Initialize low pass filter parameters
-    float prev_pitch = 0.0, prev_roll = 0.0;
-    const float FILTER_ALPHA = 0.7;  // Adjust accelerometer and gyroscope weights
-
     // Start reading data and calculating
     while (true) {
         // Read  data
@@ -147,26 +148,24 @@ void MPU6050::run() {
 
         // Convert raw data to g and °/s
         float ay = accel_y / 16384.0 - ay_offset;
-        float az = accel_z / 16384.0 - az_offset;
+        float az = -（accel_z / 16384.0 - az_offset）;
         float gx = (gyro_x / 131.0) - gx_offset;
 
         // Calculate accelerometer tilt angles （Pitch and Roll）
-        float accel_pitch = atan2(ay, az) * 180.0 / M_PI;
-
-            // Complementary filter: combine accelerometer and gyroscope data
-            // pitch = 0.98 * (pitch + gx * dt) + 0.02 * accel_pitch;
+        float accel_pitch = atan2(accel_y-0.01, -accel_z-0.17) * 180.0 / M_PI;  // Artificially add the offset value
 
         // Kalman filter: refresh accelerometer
         float pitch = Kalman_pitch.update(accel_pitch, gx, dt);  //gyro_pitch
-
-        // Smoothing
-        // pitch = low_pass_filter(pitch, prev_pitch, FILTER_ALPHA);
 
         prev_pitch = pitch;
 
         // Output the calculated pitch and the forward/backward acceleration (ax)
         std::lock_guard<std::mutex> guard(data_mutex);  // Mutex to protect shared std::cout
         std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
+        std::cout << "gx: " << gx << "°  a_p " << accel_pitch << std::endl;
+        std::cout << "az: " << az << "  az_offset " << az_offset <<  "  accel_z " << -accel_z/16384.0 << std::endl;
+        std::cout << "ay: " << ay << "  ay_offset " << ay_offset << "  accel_y " << accel_y/16384.0 << std::endl;
+        
         if (callback) callback(pitch, ay);
         usleep(10000);  // Delay 10ms
     }
