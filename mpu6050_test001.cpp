@@ -89,6 +89,9 @@ void MPU6050::run() {
 
     // Start reading data and calculating
     while (true) {
+        // delay initial
+        auto next_time = std::chrono::steady_clock::now();
+
         // Read  data
         int accel_y = i2c_read_word(file, ACCEL_YOUT_H);
         int accel_z = i2c_read_word(file, ACCEL_ZOUT_H);
@@ -114,7 +117,10 @@ void MPU6050::run() {
         std::lock_guard<std::mutex> guard(data_mutex);  // Mutex to protect shared std::cout
         std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
         if (callback) callback(pitch, ay);    //Why callback gx?
-        usleep(10000);  // Delay 10ms
+
+        //actual delay
+        next_time += std::chrono::microseconds(10000);
+        std::this_thread::sleep_until(next_time); // Delay 10ms
     }
 
     close(file);

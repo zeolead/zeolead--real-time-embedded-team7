@@ -15,11 +15,12 @@ public:
 	MotorControl(UBYTE motor_id);
 	~MotorControl();    
 
-	void start();                                  //启动线程
+	void start(int sign);                                  //启动线程
 	void stop();                                  //停止线程
 	void setRPM(float rpm);               //实时设置转速
 	//void SetDirection(UBYTE dir);     //设置方向
 	void Run();                      //线程函数，持续发出脉冲
+	void TurnStep(UBYTE dir, UWORD steps, UWORD stepdelay);
 
 private:
 	DRV8825::Motor motor_;                  // 每个控制器维护自己的电机引脚配置

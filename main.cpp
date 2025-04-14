@@ -15,8 +15,7 @@ void Handler(int sig) {
 }
 
 
-int main() {
-
+int main(int argc, char* argv[]) {
     // initialize
     MPU6050 mpu;
     PID pid;
@@ -33,14 +32,17 @@ int main() {
     });
     
     pid.setOutputCallback([&](float output) {
-        int rpm = std::static_cast<int>(output);
+        int rpm = static_cast<int>(output);
         motor1.setRPM(rpm);
         motor2.setRPM(-rpm);
         
     });
     
-    motor1.start();
-    motor2.start();
+    motor1.start(1);
+    motor2.start(1);
+
+    //motor1.TurnStep(DRV8825::FORWARD, 10, 50);   //10 pluses for 4.5 degree
+    //motor2.TurnStep(DRV8825::BACKWARD, 10, 50);
     
     std::thread mpuThread(&MPU6050::run, &mpu);
     mpuThread.join(); 

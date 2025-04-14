@@ -10,7 +10,7 @@ MotorControl::~MotorControl() {
 	this->stop();
 }
 
-void MotorControl::start() {
+void MotorControl::start(int sign) {
 	std::lock_guard<std::mutex> lock(mutex_);
 	if (running_) return;
 	running_ = true;
@@ -18,7 +18,10 @@ void MotorControl::start() {
 	DRV8825::SelectMotor(motor_, motor_id_);
 	DRV8825::Enable(motor_);
 	//Debug::Log("motor %d, start\n",motor_id_);
-	control_thread_ = std::thread(&MotorControl::Run, this);
+	if (sign == 1){
+		control_thread_ = std::thread(&MotorControl::Run, this);
+	}
+		
 }
 
 void MotorControl::stop() {
@@ -71,4 +74,8 @@ void MotorControl::Run() {
 		next_time += std::chrono::microseconds(delay_us);
 		std::this_thread::sleep_until(next_time);
 	}
+}
+
+void MotorControl::TurnStep(UBYTE dir, UWORD steps, UWORD stepdelay) {
+	DRV8825::TurnStep(motor_, dir, steps, stepdelay);
 }

@@ -37,9 +37,6 @@ int main() {
     MotorControl motor1(DRV8825::MOTOR1);
     MotorControl motor2(DRV8825::MOTOR2);
 
-    motor1.setRPM(234);
-    motor2.setRPM(10);
-
     motor1.start();
     motor2.start();
 
@@ -47,15 +44,16 @@ int main() {
    //  8      C4
    //  9      D4
    //234     F5
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+   while(true){
+        std::this_thread::sleep_for(std::chrono::seconds(0.5));
+        motor1.setRPM(-234);
+        motor2.setRPM(234);
 
-    motor1.setRPM(-234);
+        std::this_thread::sleep_for(std::chrono::seconds(0.5));
+        motor1.setRPM(234);
+        motor2.setRPM(-234);
 
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-
-    motor2.setRPM(234);
-
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+   }
 
     motor1.stop();
     motor2.stop();
