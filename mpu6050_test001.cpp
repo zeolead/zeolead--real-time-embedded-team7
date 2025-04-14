@@ -79,12 +79,12 @@ void MPU6050::run() {
     gx_offset /= num_samples;
 
     // Initialize 
-    float pitch = 0.0, roll = 0.0;
-    float gyro_pitch = 0.0, gyro_roll = 0.0;
+    float pitch = 0.0;
+    float gyro_pitch = 0.0;
     float dt = 0.001;  // Time interval 10ms
 
     //Initialize low pass filter parameters
-    float prev_pitch = 0.0, prev_roll = 0.0;
+    float prev_pitch = 0.0;
     const float FILTER_ALPHA = 0.7;  // Adjust accelerometer and gyroscope weights
 
     // Start reading data and calculating
@@ -117,7 +117,7 @@ void MPU6050::run() {
         std::cout << "gx: " << gx << "°  a_p " << accel_pitch << std::endl;
         std::cout << "az: " << az << "  az_offset " << az_offset <<  "  accel_z " << -accel_z/16384.0 << std::endl;
         std::cout << "ay: " << ay << "  ay_offset " << ay_offset << "  accel_y " << accel_y/16384.0 << std::endl;
-        if (callback) callback(pitch, ay);    //Why callback gx?
+        if (callback) callback(pitch, ay);
         usleep(1000);  // Delay 10ms
     }
 
