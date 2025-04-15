@@ -135,7 +135,7 @@ void MPU6050::run() {
     // float gyro_pitch = 0.0, gyro_roll = 0.0;
     
     // Initialize Kalman Filter
-    KalmanFilter Kalman_pitch(0.001, 0.003, 0.03);
+    KalmanFilter Kalman_pitch(0.03, 0.05, 0.01);    //0.001， 0.003， 0.03
     
     float dt = 0.01;  // Time interval 10ms
 
@@ -148,23 +148,27 @@ void MPU6050::run() {
 
         // Convert raw data to g and °/s
         float ay = accel_y / 16384.0 - ay_offset;
-        float az = -（accel_z / 16384.0 - az_offset）;
+        float az = -(accel_z / 16384.0 - az_offset);
         float gx = (gyro_x / 131.0) - gx_offset;
 
         // Calculate accelerometer tilt angles （Pitch and Roll）
-        float accel_pitch = atan2(accel_y-0.01, -accel_z-0.17) * 180.0 / M_PI;  // Artificially add the offset value
+        float accel_pitch = atan2(accel_y / 16384.0 - 0.01, -accel_z / 16384.0 - 0.17) * 180.0 / M_PI;  // Artificially add the offset value
 
         // Kalman filter: refresh accelerometer
         float pitch = Kalman_pitch.update(accel_pitch, gx, dt);  //gyro_pitch
+        pitch = std::clamp(pitch, -90.0f, 90.0f);
+        
+        //if (logfile.is_open()){
+        //    logfile << pitch << " , " << ay << " , " << accel_y/16384.0 << " , " << -accel_z/16384.0 << std::endl;
+        //
 
-        prev_pitch = pitch;
+        float prev_pitch = pitch;
 
         // Output the calculated pitch and the forward/backward acceleration (ax)
         std::lock_guard<std::mutex> guard(data_mutex);  // Mutex to protect shared std::cout
         std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
-        std::cout << "gx: " << gx << "°  a_p " << accel_pitch << std::endl;
-        std::cout << "az: " << az << "  az_offset " << az_offset <<  "  accel_z " << -accel_z/16384.0 << std::endl;
-        std::cout << "ay: " << ay << "  ay_offset " << ay_offset << "  accel_y " << accel_y/16384.0 << std::endl;
+        std::cout << "gx: " << gx << "  a_p " << accel_pitch << std::endl;
+
         
         if (callback) callback(pitch, ay);
         usleep(10000);  // Delay 10ms
