@@ -152,7 +152,7 @@ void MPU6050::run() {
         float gx = (gyro_x / 131.0) - gx_offset;
 
         // Calculate accelerometer tilt angles （Pitch and Roll）
-        float accel_pitch = atan2(accel_y-0.01, -accel_z-0.17) * 180.0 / M_PI;  // Artificially add the offset value
+        float accel_pitch = atan2(accel_y / 16384.0 - 0.01, -accel_z / 16384.0 - 0.17) * 180.0 / M_PI;  // Artificially add the offset value
 
         // Kalman filter: refresh accelerometer
         float pitch = Kalman_pitch.update(accel_pitch, gx, dt);  //gyro_pitch
