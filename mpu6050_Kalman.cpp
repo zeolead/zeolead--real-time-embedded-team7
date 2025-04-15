@@ -156,15 +156,14 @@ void MPU6050::run() {
 
         // Kalman filter: refresh accelerometer
         float pitch = Kalman_pitch.update(accel_pitch, gx, dt);  //gyro_pitch
-
+        pitch = std::clamp(pitch, -90.0f, 90.0f);
         prev_pitch = pitch;
 
         // Output the calculated pitch and the forward/backward acceleration (ax)
         std::lock_guard<std::mutex> guard(data_mutex);  // Mutex to protect shared std::cout
         std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
         std::cout << "gx: " << gx << "°  a_p " << accel_pitch << std::endl;
-        std::cout << "az: " << az << "  az_offset " << az_offset <<  "  accel_z " << -accel_z/16384.0 << std::endl;
-        std::cout << "ay: " << ay << "  ay_offset " << ay_offset << "  accel_y " << accel_y/16384.0 << std::endl;
+
         
         if (callback) callback(pitch, ay);
         usleep(10000);  // Delay 10ms
