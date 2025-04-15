@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "motor_main.cpp",
               "ToolTip": "F:\\Mrobotic\\real_time_embeded\\segway\\PID\\MotorControl\\MotorControl\\MotorControl\\motor_main.cpp",
               "RelativeToolTip": "motor_main.cpp",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAADIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAAEAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-04-13T14:36:12.95Z",
               "EditorCaption": ""
@@ -70,6 +70,14 @@
             {
               "$type": "Bookmark",
               "Name": "ST:8:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:9:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:10:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
             }
           ]
         }

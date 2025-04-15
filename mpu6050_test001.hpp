@@ -41,7 +41,7 @@ public:
 
     // Starts a thread for data reading and processing
     void run();
-    void setCallback(const std::function<void(float, float)>& cb);
+    void setCallback(const std::function<void(float, float )>& cb);
 };
 // Function to start the sensor data reading thread
 int sensor_start();

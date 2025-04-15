@@ -10,7 +10,7 @@ MotorControl::~MotorControl() {
 	this->stop();
 }
 
-void MotorControl::start(int sign) {
+void MotorControl::start() {
 	std::lock_guard<std::mutex> lock(mutex_);
 	if (running_) return;
 	running_ = true;
@@ -18,10 +18,7 @@ void MotorControl::start(int sign) {
 	DRV8825::SelectMotor(motor_, motor_id_);
 	DRV8825::Enable(motor_);
 	//Debug::Log("motor %d, start\n",motor_id_);
-	if (sign == 1){
-		control_thread_ = std::thread(&MotorControl::Run, this);
-	}
-		
+	control_thread_ = std::thread(&MotorControl::Run, this);
 }
 
 void MotorControl::stop() {
@@ -37,6 +34,9 @@ void MotorControl::stop() {
 
 void MotorControl::setRPM(float rpm) {
 	std::lock_guard<std::mutex> lock(mutex_);
+	if (outputCallback) {
+		outputCallback(rpm);
+	}
 	if (rpm >= 0) {
 		direction_ = DRV8825::FORWARD;
 	}
@@ -45,12 +45,23 @@ void MotorControl::setRPM(float rpm) {
 		rpm = -rpm;  // 把 rpm 存成正值，避免负数参与 delay_us 计算
 	}
 	rpm_ = rpm;
-	Debug::Log("set rpm %f  (dir %d) for motor %d\n", rpm, direction_.load(), motor_id_);
+	//Debug::Log("set rpm %f  (dir %d) for motor %d\n", rpm, direction_.load(), motor_id_);
+}
+
+void MotorControl::accelerate(float acc) {
+	rpm += acc;
+	if (rpm > 234) rpm = 234;
+	if (rpm < -234) rpm = -234;
+	setRPM(rpm);
 }
 
 //void MotorControl::SetDirection(UBYTE dir) {
 //	direction_ = dir;
 //}
+
+void MotorControl::setOutputCallback(std::function<void(float)> callback) {
+	outputCallback = callback;
+}
 
 void MotorControl::Run() {
 	constexpr int steps_per_rev = 800;
@@ -74,8 +85,4 @@ void MotorControl::Run() {
 		next_time += std::chrono::microseconds(delay_us);
 		std::this_thread::sleep_until(next_time);
 	}
-}
-
-void MotorControl::TurnStep(UBYTE dir, UWORD steps, UWORD stepdelay) {
-	DRV8825::TurnStep(motor_, dir, steps, stepdelay);
 }

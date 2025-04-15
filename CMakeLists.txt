@@ -4,7 +4,6 @@ project(PID)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 # 设置源文件
 set(SOURCES
     main.cpp
@@ -30,4 +29,4 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(PID ${SOURCES} ${HEADER_FILES})
 
 # 链接外部库
-target_link_libraries( PID lgpio pthread )
+target_link_libraries( PID lgpio pthread)
