@@ -135,7 +135,7 @@ void MPU6050::run() {
     // float gyro_pitch = 0.0, gyro_roll = 0.0;
     
     // Initialize Kalman Filter
-    KalmanFilter Kalman_pitch(0.001, 0.003, 0.03);
+    KalmanFilter Kalman_pitch(0.03, 0.05, 0.01);    //0.001， 0.003， 0.03
     
     float dt = 0.01;  // Time interval 10ms
 
