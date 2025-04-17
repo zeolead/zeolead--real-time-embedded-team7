@@ -10,7 +10,7 @@
 #include <vector>        // 添加，用于记录数据
 #include <chrono>        // 添加，用于计时
 #include <cstdio>        // 添加，用于 popen
-#include "mpu6050_test001.hpp"
+#include "mpu6050_Kalman.hpp"
 
 // ...（其它代码保持不变）...
 

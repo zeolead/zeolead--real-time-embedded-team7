@@ -18,6 +18,6 @@
   "ExpandedNodes": [
     ""
   ],
-  "SelectedNode": "\\F:\\Mrobotic\\real_time_embeded\\segway\\PID\\CMakeLists.txt\\PID\\mpu6050_test001.cpp",
+  "SelectedNode": "\\F:\\Mrobotic\\real_time_embeded\\segway\\PID\\CMakeLists.txt\\PID\\mpu6050_Kalman.cpp",
   "PreviewInSolutionExplorer": false
 }

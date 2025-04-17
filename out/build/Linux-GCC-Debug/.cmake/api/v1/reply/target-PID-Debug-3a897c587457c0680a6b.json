@@ -159,7 +159,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "mpu6050_test001.cpp",
+			"path" : "mpu6050_Kalman.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -187,7 +187,7 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "mpu6050_test001.hpp",
+			"path" : "mpu6050_Kalman.hpp",
 			"sourceGroupIndex" : 1
 		},
 		{

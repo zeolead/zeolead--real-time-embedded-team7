@@ -15,9 +15,9 @@
 1612342868 F:\Mrobotic\real_time_embeded\segway\PID\motor_main.cpp
 1443187191 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_Kalman.cpp
 1910327319 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_Kalman_plot_0.005_0.03_0.03.cpp
-413321429 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_test001.cpp
--208095835 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_test001.hpp
-1910332848 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_test001_plot.cpp
+413321429 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_Kalman.cpp
+-208095835 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_Kalman.hpp
+1910332848 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_Kalman_plot.cpp
 831007432 F:\Mrobotic\real_time_embeded\segway\PID\PID.cpp
 672770204 F:\Mrobotic\real_time_embeded\segway\PID\PID.hpp
 1910332848 F:\Mrobotic\real_time_embeded\segway\PID\plot_sensor.py

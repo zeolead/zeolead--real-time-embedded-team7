@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(SOURCES
     main.cpp
     PID.cpp
-    mpu6050_test001.cpp
+    mpu6050_Kalman.cpp
     MotorControl.cpp
     DRV8825.cpp
     Dev_Config.cpp
@@ -16,7 +16,7 @@ set(SOURCES
 
 set(HEADER_FILES
     PID.hpp
-    mpu6050_test001.hpp
+    mpu6050_Kalman.hpp
     MotorControl.hpp
     DRV8825.hpp
     DEV_Config.hpp
