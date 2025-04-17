@@ -16,8 +16,7 @@ void Handler(int sig) {
 
 
 int main() {
-    int turn1 = 0;
-    int turn2 = 0;
+
     // initialize
     MPU6050 mpu;
     PID pid;
@@ -35,22 +34,16 @@ int main() {
     
     pid.setOutputCallback([&](float output) {
         int rpm = static_cast<int>(output);
-        motor1.setRPM(rpm+turn1);
-        motor2.setRPM(-rpm+turn2);
+        motor1.setRPM(rpm);
+        motor2.setRPM(-rpm);
+        
     });
-
-    motor1.setOutputCallback([&](float rpm) {
-        std::cout << "RPM from callback:" << rpm << std::endl;
-        pid.receiveRPM(rpm);
-        });
     
     motor1.start();
     motor2.start();
     
     std::thread mpuThread(&MPU6050::run, &mpu);
-
-
-mpuThread.join(); 
+    mpuThread.join(); 
 
     std::cout << "close system" << std::endl;
 

@@ -15,14 +15,9 @@ public:
     void receiveSensorData(float pitch, float ax);
     //set callback
     void setOutputCallback(std::function<void(float)> callback);
-    //recieve rpm from main
-    void receiveRPM(float rpm);
-
 private:
     std::function<void(float)> outputCallback;
     float current_pitch = 0.0f;
-    float pitch_angvol = 0.0f;
-    float RPM = 0.0f;
 };
 
 #endif // PID_HPP

@@ -12,6 +12,11 @@
 #include <thread>
 #include <mutex>
 #include <functional>
+
+#include <vector>        // 添加，用于记录数据
+#include <chrono>        // 添加，用于计时
+#include <cstdio>        // 添加，用于 popen
+
 #include"mpu6050_test001.hpp"
 
 #define MPU6050_ADDR 0x68
@@ -142,8 +147,19 @@ void MPU6050::run() {
     
     float dt = 0.01;  // Time interval 10ms
 
+    // 初始化数据记录容器（记录时间、滤波后 pitch 及加速度计角 accel_pitch）
+    auto start_time = std::chrono::steady_clock::now();
+    std::vector<double> timeVec, pitchVec, accelPitchVec;
+
     // Start reading data and calculating
     while (true) {
+        // 计算经过的时间（秒）
+        auto current_time = std::chrono::steady_clock::now();
+        double elapsed = std::chrono::duration<double>(current_time - start_time).count();
+        if (elapsed >= 20.0) {
+            break;
+        }
+
         // Read  data
         int accel_y = i2c_read_word(file, ACCEL_YOUT_H);
         int accel_z = i2c_read_word(file, ACCEL_ZOUT_H);
@@ -165,15 +181,64 @@ void MPU6050::run() {
         //    logfile << pitch << " , " << ay << " , " << accel_y/16384.0 << " , " << -accel_z/16384.0 << std::endl;
         //
 
-        float prev_pitch = pitch;
+        
+        // 记录数据（时间、滤波后 pitch 以及 accel_pitch）
+        timeVec.push_back(elapsed);
+        pitchVec.push_back(pitch);
+        accelPitchVec.push_back(accel_pitch);
+
+        // 输出数据到控制台（可选）
+        {
+            std::lock_guard<std::mutex> guard(data_mutex);
+            std::cout << "Time: " << elapsed << " s, "
+                      << "Pitch (Kalman): " << pitch << "°, "
+                      << "Accel Pitch: " << accel_pitch << "°, "
+                      << "F/B acceleration (ay): " << ay << " g" << std::endl;
+        }
+
+        // 如果有回调函数（例如 PID 控制用），依然调用
+        if (callback) callback(pitch, ay);
+
+        usleep(10000);  // 延时 10ms
+    }
+
+
+//        float prev_pitch = pitch;
         
         // Output the calculated pitch and the forward/backward acceleration (ax)
-        std::lock_guard<std::mutex> guard(data_mutex);  // Mutex to protect shared std::cout
-        std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
-        //std::cout << "gx: " << gx << "  a_p " << accel_pitch << std::endl;
+//        std::lock_guard<std::mutex> guard(data_mutex);  // Mutex to protect shared std::cout
+//        std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
+//        std::cout << "gx: " << gx << "  a_p " << accel_pitch << std::endl;
 
-        if (callback) callback(pitch, ay);
-        usleep(10000);  // Delay 10ms
+//        if (callback) callback(pitch, ay);
+//        usleep(10000);  // Delay 10ms
+    
+    
+    // 采集结束后，调用 gnuplot 绘制曲线图
+    FILE* gp = popen("gnuplot -persistent", "w");
+    if (!gp) {
+        std::cerr << "Error: could not open gnuplot." << std::endl;
+    } else {
+        fprintf(gp, "set title 'Pitch and Accel_Pitch vs Time'\n");
+        fprintf(gp, "set xlabel 'Time (s)'\n");
+        fprintf(gp, "set ylabel 'Angle (°)'\n");
+        fprintf(gp, "set grid\n");
+        // 用两条曲线绘制：第一条为滤波后 Pitch，第二条为直接计算的 Accel Pitch
+        fprintf(gp, "plot '-' with lines title 'Filtered Pitch', '-' with lines title 'Accel Pitch'\n");
+        
+        // 发送第一组数据（时间和滤波后 pitch）
+        for (size_t i = 0; i < timeVec.size(); i++) {
+            fprintf(gp, "%f %f\n", timeVec[i], pitchVec[i]);
+        }
+        fprintf(gp, "e\n");
+        
+        // 发送第二组数据（时间和 accel_pitch）
+        for (size_t i = 0; i < timeVec.size(); i++) {
+            fprintf(gp, "%f %f\n", timeVec[i], accelPitchVec[i]);
+        }
+        fprintf(gp, "e\n");
+
+        pclose(gp);
     }
 
     close(file);
