@@ -28,8 +28,8 @@ int main() {
     MotorControl motor2(DRV8825::MOTOR2);
     
 
-    mpu.setCallback([&](float pitch, float ax) {
-        pid.receiveSensorData(pitch, ax); 
+    mpu.setCallback([&](float pitch, float ay) {
+        pid.receiveSensorData(pitch, ay); 
     });
     
     pid.setOutputCallback([&](float output) {

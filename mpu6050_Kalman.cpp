@@ -146,9 +146,9 @@ void MPU6050::run() {
         // Calculate elapsed time in seconds
         auto current_time = std::chrono::steady_clock::now();
         double elapsed = std::chrono::duration<double>(current_time - start_time).count();
-        if (elapsed >= 20.0) {
-            break;
-        }
+        // if (elapsed >= 20.0) {
+        //     break;
+        // }
 
         // Read data
         int accel_y = i2c_read_word(file, ACCEL_YOUT_H);
@@ -161,8 +161,7 @@ void MPU6050::run() {
         float gx = (gyro_x / 131.0) - gx_offset;
 
         // Calculate accelerometer tilt angle (pitch)
-        float accel_pitch = atan2(accel_y / 16384.0 - 0.01,
-                                  -accel_z / 16384.0 - 0.17) * 180.0 / M_PI;
+        float accel_pitch = atan2(accel_y / 16384.0 - 0.01, -accel_z / 16384.0 - 0.17) * 180.0 / M_PI;
 
         // Kalman filter fusion: combine accelerometer and gyro data for smoother angle estimate (pitch)
         float pitch = Kalman_pitch.update(accel_pitch, gx, dt);
@@ -193,35 +192,34 @@ void MPU6050::run() {
     //    std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
     //    std::cout << "gx: " << gx << "  a_p " << accel_pitch << std::endl;
 
-    //    if (callback) callback(pitch, ay);
-    //    usleep(10000);  // Delay 10ms
+
     
     // After collection, call gnuplot to plot the graph
-    FILE* gp = popen("gnuplot -persistent", "w");
-    if (!gp) {
-        std::cerr << "Error: could not open gnuplot." << std::endl;
-    } else {
-        fprintf(gp, "set title 'Pitch and Accel_Pitch vs Time'\n");
-        fprintf(gp, "set xlabel 'Time (s)'\n");
-        fprintf(gp, "set ylabel 'Angle (°)'\n");
-        fprintf(gp, "set grid\n");
-        // Plot two curves: first for filtered pitch, second for accel_pitch
-        fprintf(gp, "plot '-' with lines title 'Filtered Pitch', '-' with lines title 'Accel Pitch'\n");
+    // FILE* gp = popen("gnuplot -persistent", "w");
+    // if (!gp) {
+    //     std::cerr << "Error: could not open gnuplot." << std::endl;
+    // } else {
+    //     fprintf(gp, "set title 'Pitch and Accel_Pitch vs Time'\n");
+    //     fprintf(gp, "set xlabel 'Time (s)'\n");
+    //     fprintf(gp, "set ylabel 'Angle (°)'\n");
+    //     fprintf(gp, "set grid\n");
+    //     // Plot two curves: first for filtered pitch, second for accel_pitch
+    //     fprintf(gp, "plot '-' with lines title 'Filtered Pitch', '-' with lines title 'Accel Pitch'\n");
 
-        // Send first data set (time and filtered pitch)
-        for (size_t i = 0; i < timeVec.size(); i++) {
-            fprintf(gp, "%f %f\n", timeVec[i], pitchVec[i]);
-        }
-        fprintf(gp, "e\n");
+    //     // Send first data set (time and filtered pitch)
+    //     for (size_t i = 0; i < timeVec.size(); i++) {
+    //         fprintf(gp, "%f %f\n", timeVec[i], pitchVec[i]);
+    //     }
+    //     fprintf(gp, "e\n");
 
-        // Send second data set (time and accel_pitch)
-        for (size_t i = 0; i < timeVec.size(); i++) {
-            fprintf(gp, "%f %f\n", timeVec[i], accelPitchVec[i]);
-        }
-        fprintf(gp, "e\n");
+    //     // Send second data set (time and accel_pitch)
+    //     for (size_t i = 0; i < timeVec.size(); i++) {
+    //         fprintf(gp, "%f %f\n", timeVec[i], accelPitchVec[i]);
+    //     }
+    //     fprintf(gp, "e\n");
 
-        pclose(gp);
-    }
+    //     pclose(gp);
+    // }
 
     close(file);
 }
