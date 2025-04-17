@@ -4,7 +4,7 @@
 #include <cmath>
 #include <csignal>
 #include <unistd.h>
-#include "mpu6050_Kalman.hpp"
+#include "mpu6050_test001.hpp"
 #include "PID.hpp"
 #include "MotorControl.hpp"
 
@@ -13,10 +13,17 @@ void Handler(int sig) {
     DEV_Config::DEV_ModuleExit();
     exit(0);
 }
-
+void updatePIDParams(PID& pid) {
+    pid.receivePIDParams(
+        0.3f, 0.1f,   // vertical_kp, vertical_kd
+        0.2f, 0.05f,  // velocity_kp, velocity_ki
+        0.0f          // target_velocity
+    );
+}
 
 int main() {
-
+    int turn1;
+    int turn2;
     // initialize
     MPU6050 mpu;
     PID pid;
@@ -27,15 +34,17 @@ int main() {
     MotorControl motor1(DRV8825::MOTOR1);
     MotorControl motor2(DRV8825::MOTOR2);
     
+    pid.setParamCallback(std::bind(updatePIDParams, std::ref(pid)));
+    pid.triggerParamCallback();
 
-    mpu.setCallback([&](float pitch, float ay) {
-        pid.receiveSensorData(pitch, ay); 
+    mpu.setCallback([&](float pitch, float ax) {
+        pid.receiveSensorData(pitch, ax); 
     });
     
     pid.setOutputCallback([&](float output) {
-        int rpm = static_cast<int>(output);
-        motor1.setRPM(rpm);
-        motor2.setRPM(-rpm);
+        int rpm = std::static_cast<int>(output);
+        motor1.setRPM(rpm+turn1);
+        motor2.setRPM(-rpm+turn2);
         
     });
     

@@ -15,9 +15,19 @@ public:
     void receiveSensorData(float pitch, float ax);
     //set callback
     void setOutputCallback(std::function<void(float)> callback);
+
+    void setParamCallback(std::function<void()> callback);
+    void triggerParamCallback();
+    void receivePIDParams(float vertical_kp,  float vertical_kd ,float velocity_kp  ,float velocity_ki, float target_velocity )
 private:
+    std::function<void()> paramCallback;
     std::function<void(float)> outputCallback;
     float current_pitch = 0.0f;
+    float vertical_kp; 
+    float vertical_kd;
+    float velocity_kp;
+    float velocity_ki ;
+    float target_velocity ;
 };
 
 #endif // PID_HPP
