@@ -27,17 +27,18 @@
 #define GYRO_XOUT_H  0x43
 
 // Constructor
-auto MPU6050::MPU6050() -> void {
-    file = -1;            // Initialize the I2C file descriptor
-    ay_offset = az_offset = 0.0f;
-    gx_offset = 0.0f;
-}
+MPU6050::MPU6050()
+    : file(-1), ay_offset(0), az_offset(0), gx_offset(0), running_(false) {}  // Initialize the I2C file descriptor
 
 // Destructor
-auto MPU6050::~MPU6050() -> void {
-    if (file >= 0) {
-        close(file);
-    }
+MPU6050::~MPU6050() {
+    stop();
+    if (file >= 0) close(file);
+}
+
+void MPU6050::stop() {
+    std::lock_guard<std::mutex> lock(data_mutex);
+    running_ = false;
 }
 
 // Read a 16-bit word from I2C bus
@@ -98,6 +99,10 @@ float MPU6050::low_pass_filter(float new_data, float old_data, float alpha) {
 }
 
 void MPU6050::run() {
+    {
+        std::lock_guard<std::mutex> lock(data_mutex);
+        running_ = true;
+    }
     // Open I2C device
     file = open("/dev/i2c-1", O_RDWR);
     if (file < 0) {
@@ -143,6 +148,10 @@ void MPU6050::run() {
 
     // Collect data for 20 seconds
     while (true) {
+        {
+            std::lock_guard<std::mutex> lock(data_mutex);
+            if (!running_) break;
+        }
         // Calculate elapsed time in seconds
         auto current_time = std::chrono::steady_clock::now();
         double elapsed = std::chrono::duration<double>(current_time - start_time).count();
@@ -160,11 +169,11 @@ void MPU6050::run() {
         float az = -(accel_z / 16384.0 - az_offset);
         float gx = (gyro_x / 131.0) - gx_offset;
 
-        // Calculate accelerometer tilt angle (pitch)
-        float accel_pitch = atan2(accel_y / 16384.0 - 0.01, -accel_z / 16384.0 - 0.17) * 180.0 / M_PI;
+        // Calculate accelerometer tilt angles （Pitch and Roll）
+        float accel_pitch = atan2(accel_y / 16384.0 - 0.01, -accel_z / 16384.0 - 0.17) * 180.0 / M_PI;  // Artificially add the offset value
 
-        // Kalman filter fusion: combine accelerometer and gyro data for smoother angle estimate (pitch)
-        float pitch = Kalman_pitch.update(accel_pitch, gx, dt);
+        // Kalman filter: refresh accelerometer
+        float pitch = Kalman_pitch.update(accel_pitch, gx, dt);  //gyro_pitch
         pitch = std::clamp(pitch, -90.0f, 90.0f);
 
         // Record data (time, filtered pitch, and accel_pitch)
@@ -182,9 +191,13 @@ void MPU6050::run() {
         }
 
         // If callback exists (e.g., for PID control), still call
-        if (callback) callback(pitch, ay);
+        {
+            std::lock_guard<std::mutex> lock(data_mutex);
+            if (callback) callback(pitch, ay);
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
 
-        usleep(10000);  // Delay 10ms
+        // usleep(10000);  // Delay 10ms
     }
 
     //Output the calculated pitch and the forward/backward acceleration (ax)

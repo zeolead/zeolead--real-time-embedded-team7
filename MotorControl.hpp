@@ -8,6 +8,7 @@
 #include "Debug.hpp"
 #include "DEV_Config.hpp"
 #include "DRV8825.hpp"
+#include <functional>
 
 /*------------------------------------------------------------------------------------------------------*/
 class MotorControl {
@@ -15,21 +16,29 @@ public:
 	MotorControl(UBYTE motor_id);
 	~MotorControl();    
 
-	void start();                                  //Æô¶¯Ïß³Ì
-	void stop();                                  //Í£Ö¹Ïß³Ì
-	void setRPM(float rpm);               //ÊµÊ±ÉèÖÃ×ªËÙ
-	//void SetDirection(UBYTE dir);     //ÉèÖÃ·½Ïò
-	void Run();                      //Ïß³Ìº¯Êý£¬³ÖÐø·¢³öÂö³å
+	void start();                                  //ï¿½ï¿½ï¿½ï¿½ï¿½ß³ï¿½
+	void stop();                                  //Í£Ö¹ï¿½ß³ï¿½
+	void setRPM(float rpm);               //ÊµÊ±ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
+	//void SetDirection(UBYTE dir);     //ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½
+
+    // Status callback: direction (0/1) and target RPM
+    void setStatusCallback(const std::function<void(uint8_t,int)>& cb);
+    // Step callback: called after each step pulse
+    void setStepCallback(const std::function<void()>& cb);
 
 private:
-	DRV8825::Motor motor_;                  // Ã¿¸ö¿ØÖÆÆ÷Î¬»¤×Ô¼ºµÄµç»úÒý½ÅÅäÖÃ
-	
+	void Run();                      //ï¿½ß³Ìºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+	DRV8825::Motor motor_;                  // Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¬ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	UBYTE motor_id_;
 	std::mutex mutex_;
 	std::thread control_thread_;
 	std::atomic<bool> running_;
 	std::atomic<float> rpm_;
 	std::atomic<UBYTE> direction_;
+
+	std::function<void(uint8_t,int)> statusCallback_;
+    std::function<void()> stepCallback_;
 };
 
 #endif // MotorControl_HPP_

@@ -21,6 +21,10 @@ int main() {
     // For testing, let the sensor run for a few iterations.
     // Here we sleep for 3 seconds to observe several callback outputs.
     std::this_thread::sleep_for(std::chrono::seconds(3));
+    
+    // Stop and join
+    sensor.stop();
+    sensorThread.join();
 
     std::cout << "Exiting callback test program." << std::endl;
 
