@@ -1,29 +1,25 @@
-#include<websocketpp/config/asio_no_tls.hpp>
-#include<websocketpp/server.hpp>
-#include<iostream>
-#include<thread>
-#include<functional>
+#include "websocketcontroller.hpp"
+#include <iostream>
 
-typedef websocketpp::server<websocketpp::config::asio> server_t;1
+void Webservercontroller::control(StoreCallback storeCb) {
+  ws_server.init_asio();
+  ws_server.listen(8765);
+  ws_server.start_accept();
+  ws_server.set_message_handler(
+    [this, storeCb](auto hdl, auto msg) {
+      this->on_message(hdl, msg);
+      storeCb(msg->get_payload());
+    }
+  );
+  std::cout << "Server started\n";
+  ws_server.run();
+}
 
-class Webservercontroller {
-    public:
-        void control（） {
-            ws_server.set_message_handler(bind(&Webservercontroller::on_message, this, std::placeholders::_1, std::placeholders::_2));
-        }
-        ws_server.init_asio();
-        ws_server.listen(8765);
-        ws_server.start_accept();
-        std::cout << "Server started on port 8765" << std::endl;
-        ws_server.run();
-    
-    private:
-        
-        void on_message(websocketpp::connection_hdl hdl, server_t::message_ptr msg) 
-            std::cout << "Received message: " << msg->get_payload() << std::endl;
-            std::string command = msg->get_payload();
-            std::cout << "Executing command: " << command << std::endl;
-        }                                                                                                                                                                                                   
+void Webservercontroller::control() {
+  control([](const std::string&){});
+}
 
-server_t ws_server;    
+void Webservercontroller::on_message(server_t::connection_hdl hdl,server_t::message_ptr msg) {
+  std::cout << "Received: " << msg->get_payload() << "\n";
+  ws_server.send(hdl,"Ack: " + msg->get_payload(),websocketpp::frame::opcode::text);
 }
