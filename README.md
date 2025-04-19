@@ -19,7 +19,7 @@ Studying the dynamic balance of a vehicle on two wheels is essential for future 
 
 ### February 27, 2025 (Thursday)
 - Successfully flashed the Raspberry Pi OS.
-- All team members can now remotely access the Pi from their devices.
+- All team members can remotely access the Pi from our devices.
 - All ordered hardware components have arrived.
 
 ### March 13, 2025 (Thursday)
@@ -52,7 +52,7 @@ Studying the dynamic balance of a vehicle on two wheels is essential for future 
 - Rewrote both speed and balance control loops; successfully resolved speed overflow issue.
 
 ### April 12, 2025 (Saturday)
-- Moved testing site to the lab. The self-balancing robot is ready for joint debugging!
+- Testing moved to the lab — wheels mounted, and all systems are go for integrated debugging.
 
 ### April 13, 2025 (Sunday)
 - Retuned complementary filter to improve angle accuracy.
