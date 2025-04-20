@@ -1,3 +1,9 @@
+//GPIO layer code 
+//1. Initial gpio setting for motors
+//2. Close GPIO chip
+//3. GPIO output
+//4. Delay  It is said as ms, but actually us
+
 #include "DEV_Config.hpp"
 #include "Debug.hpp"
 #include <cstdio>

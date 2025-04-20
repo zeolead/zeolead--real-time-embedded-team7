@@ -1,0 +1,55 @@
+-1184679907 F:\Mrobotic\real_time_embeded\segway\PID\CMakeLists.txt
+717841558 F:\Mrobotic\real_time_embeded\segway\PID\CMakeSettings.json
+-1105609397 F:\Mrobotic\real_time_embeded\segway\PID\control.cpp
+1443187191 F:\Mrobotic\real_time_embeded\segway\PID\cppremote.cpp
+-1850158625 F:\Mrobotic\real_time_embeded\segway\PID\Debug.hpp
+-978781167 F:\Mrobotic\real_time_embeded\segway\PID\Dev_Config.cpp
+-1747663516 F:\Mrobotic\real_time_embeded\segway\PID\DEV_Config.hpp
+-326935466 F:\Mrobotic\real_time_embeded\segway\PID\DRV8825.cpp
+1305620114 F:\Mrobotic\real_time_embeded\segway\PID\DRV8825.hpp
+-1105609397 F:\Mrobotic\real_time_embeded\segway\PID\Hardware Structure Design.jpg
+-448839293 F:\Mrobotic\real_time_embeded\segway\PID\Kalman_Plot.cpp
+-48009608 F:\Mrobotic\real_time_embeded\segway\PID\LICENSE
+352740158 F:\Mrobotic\real_time_embeded\segway\PID\main.cpp
+-1914685059 F:\Mrobotic\real_time_embeded\segway\PID\main.o
+-1512602733 F:\Mrobotic\real_time_embeded\segway\PID\mainremote.cpp
+-1105609397 F:\Mrobotic\real_time_embeded\segway\PID\main_with_remote.cpp
+-1572162377 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl.cpp
+-1496367803 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl.hpp
+1675358775 F:\Mrobotic\real_time_embeded\segway\PID\motor_main.cpp
+1582991653 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_Kalman.cpp
+1804676270 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_Kalman.hpp
+-1105609397 F:\Mrobotic\real_time_embeded\segway\PID\mpu6050_test001.cpp
+-559601237 F:\Mrobotic\real_time_embeded\segway\PID\PID.cpp
+-1087555643 F:\Mrobotic\real_time_embeded\segway\PID\PID.hpp
+84320608 F:\Mrobotic\real_time_embeded\segway\PID\QCustomPlot.tar.gz
+-1105609397 F:\Mrobotic\real_time_embeded\segway\PID\README.md
+-7864122 F:\Mrobotic\real_time_embeded\segway\PID\Software Structure Design.jpg
+-2146506178 F:\Mrobotic\real_time_embeded\segway\PID\Webservercontroller.cpp
+-1570377532 F:\Mrobotic\real_time_embeded\segway\PID\Webservercontroller.hpp
+-7864122 F:\Mrobotic\real_time_embeded\segway\PID\websocket.py
+-1105609397 F:\Mrobotic\real_time_embeded\segway\PID\websocketcontroller.hpp
+1051755235 F:\Mrobotic\real_time_embeded\segway\PID\
+-1105609397 F:\Mrobotic\real_time_embeded\segway\PID\.vscode\settings.json
+-822601380 F:\Mrobotic\real_time_embeded\segway\PID\.vscode\
+0 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\CMakeLists.txt
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\CMakePresets.json
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl.zip
+-1336048286 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\CMakeLists.txt
+-2097401620 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\CMakeSettings.json
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\Debug.hpp
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\Dev_Config.cpp
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\DEV_Config.hpp
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\DRV8825.cpp
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\DRV8825.hpp
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\MotorControl.cpp
+-7770734 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\MotorControl.hpp
+1912128260 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\motor_main.cpp
+-600406636 F:\Mrobotic\real_time_embeded\segway\PID\MotorControl\MotorControl\MotorControl\
+-7864122 F:\Mrobotic\real_time_embeded\segway\PID\remote control\favicon.ico
+-7864122 F:\Mrobotic\real_time_embeded\segway\PID\remote control\index.html
+-7864122 F:\Mrobotic\real_time_embeded\segway\PID\remote control\remote
+-7864122 F:\Mrobotic\real_time_embeded\segway\PID\remote control\remote.js
+-124622437 F:\Mrobotic\real_time_embeded\segway\PID\remote control\

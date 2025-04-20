@@ -1,3 +1,16 @@
+/*
+Motor Control layer
+You can control motor with speed and threads now
+1. Initial default setting of a motor class
+2. Stop this motor thread
+3. Initial motor in real world, send direction to outside, and open a thread for the chosen one
+4. Close this motor thread, and cut its power.
+5. Change the speed of this running motor, and direcion
+6. The program runs in thread. The chosen motor runs forever with changing speed.
+7. Send direction to outside
+8. Send rpm to outside
+*/
+
 #ifndef MotorControl_HPP_
 #define MotorControl_HPP_
 
@@ -13,13 +26,13 @@
 /*------------------------------------------------------------------------------------------------------*/
 class MotorControl {
 public:
-	MotorControl(UBYTE motor_id);
-	~MotorControl();    
+	MotorControl(UBYTE motor_id);  // Initial class
+	~MotorControl();                          // close thread
 
-	void start();                                  //�����߳�
-	void stop();                                  //ֹͣ�߳�
-	void setRPM(float rpm);               //ʵʱ����ת��
-	//void SetDirection(UBYTE dir);     //���÷���
+	void start();                                  // open thread
+	void stop();                                  // close thread
+	void setRPM(float rpm);               // change running rpm and direction
+	//void SetDirection(UBYTE dir);   // not used now, change direction
 
     // Status callback: direction (0/1) and target RPM
     void setStatusCallback(const std::function<void(uint8_t,int)>& cb);
@@ -27,9 +40,8 @@ public:
     void setStepCallback(const std::function<void()>& cb);
 
 private:
-	void Run();                      //�̺߳�����������������
-
-	DRV8825::Motor motor_;                  // ÿ��������ά���Լ��ĵ����������
+	void Run();                                    // run motor forever in thread
+	DRV8825::Motor motor_;              // Identify motor
 	UBYTE motor_id_;
 	std::mutex mutex_;
 	std::thread control_thread_;

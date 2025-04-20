@@ -1,20 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "F:\\Mrobotic\\real_time_embeded\\segway\\PID\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Mrobotic\\real_time_embeded\\segway\\PID\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Mrobotic\\real_time_embeded\\segway\\PID\\PID.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PID.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Mrobotic\\real_time_embeded\\segway\\PID\\PID.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PID.hpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
@@ -22,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 708,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -35,43 +22,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "main.cpp",
-              "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\PID\\main.cpp",
-              "RelativeDocumentMoniker": "main.cpp",
-              "ToolTip": "F:\\Mrobotic\\real_time_embeded\\segway\\PID\\main.cpp",
-              "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABUAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-04-20T13:48:59.059Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PID.hpp",
-              "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\PID\\PID.hpp",
-              "RelativeDocumentMoniker": "PID.hpp",
-              "ToolTip": "F:\\Mrobotic\\real_time_embeded\\segway\\PID\\PID.hpp",
-              "RelativeToolTip": "PID.hpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-04-15T09:42:42.418Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PID.cpp",
-              "DocumentMoniker": "F:\\Mrobotic\\real_time_embeded\\segway\\PID\\PID.cpp",
-              "RelativeDocumentMoniker": "PID.cpp",
-              "ToolTip": "F:\\Mrobotic\\real_time_embeded\\segway\\PID\\PID.cpp",
-              "RelativeToolTip": "PID.cpp",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-04-15T09:18:42.159Z"
             }
           ]
         },

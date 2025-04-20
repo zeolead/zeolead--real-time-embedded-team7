@@ -9,6 +9,7 @@
 #include "PID.hpp"
 #include "MotorControl.hpp"
 #include "Webservercontroller.hpp"
+
 static std::atomic<bool> quit{false};
 void Handler(int sig) {
     std::cout << "\nHandler: Manual Stop" << std::endl;
@@ -47,6 +48,12 @@ int main() {
         motor1.setRPM(rpm - turn);
         motor2.setRPM(-rpm - turn);
     });
+
+    motor1.setStatusCallback([&](int direction, int rpm_) {
+        //std::cout << "RPM from callback:" << rpm_ << std::endl;
+        pid.receiveRPM(rpm_);
+        });
+
     motor1.start();
     motor2.start();
     
@@ -57,25 +64,25 @@ int main() {
         switch (cmd) {
             case 0:  //forward
             turn=0;
-            pid.receivePIDParams(3.0f, 0.1f, 1.2f, 0.05f, 3.0f);
+            pid.receivePIDParams(3.0f, 0.1f, 1.2f, 0.05f, 10.0f);
             std::cout<<"111111"<<std::endl;
             break; 
                 
         case 1:    //backward
             turn=0;
-            pid.receivePIDParams(3.0f, 0.1f, 1.2f, 0.05f, -3.0f);
+            pid.receivePIDParams(3.0f, 0.1f, 1.2f, 0.05f, -10.0f);
             std::cout<<"111111"<<std::endl;
             break;  
                 
         case 2: //turn left
             turn=5;
-            pid.receivePIDParams(3.0f, 0.1f, 1.2f, 0.05f, 3.0f);
+            pid.receivePIDParams(3.0f, 0.1f, 1.2f, 0.05f, 0.0f);
             std::cout<<"111111"<<std::endl;
             break; 
                 
         case 3: //turn right
             turn=-5;
-            pid.receivePIDParams(3.0f, 0.1f, 1.2f, 0.05f, 3.0f);
+            pid.receivePIDParams(3.0f, 0.1f, 1.2f, 0.05f, 0.0f);
             std::cout<<"111111"<<std::endl;
             break; 
                 

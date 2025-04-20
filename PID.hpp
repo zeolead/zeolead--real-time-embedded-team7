@@ -13,21 +13,27 @@ public:
    
     //read data from sensor
     void receiveSensorData(float pitch, float ax);
+    //read rpm from main
+    void receiveRPM(float rpm);
     //set callback
     void setOutputCallback(std::function<void(float)> callback);
 
     void setParamCallback(std::function<void()> callback);
     void triggerParamCallback();
     void receivePIDParams(float vertical_kp,  float vertical_kd ,float velocity_kp  ,float velocity_ki, float target_velocity );
+
 private:
     std::function<void()> paramCallback;
     std::function<void(float)> outputCallback;
     float current_pitch = 0.0f;
     float vertical_kp=3.0; 
-    float vertical_kd=0.8;
-    float velocity_kp=2.0;
-    float velocity_ki=0.05;
+    float vertical_kd=0.02;
+    float velocity_kp=1.0;
+    float velocity_ki=0.0005;
     float target_velocity=0;
+
+    float pitch_angvol = 0.0f;
+    float RPM = 0.0f;
 };
 
 #endif // PID_HPP

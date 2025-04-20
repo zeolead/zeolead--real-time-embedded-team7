@@ -1,5 +1,6 @@
 {
   "DevContainersInfoBarHidden": true,
+  "ActiveTargetSystem": "172.20.10.3",
   "OutputFoldersPerTargetSystem": {
     "Local Machine": [
       "out\\build\\x64-Debug",
@@ -12,12 +13,17 @@
       "out\\install\\x64-Debug",
       "out\\build\\Linux-GCC-Debug",
       "out\\install\\Linux-GCC-Debug"
+    ],
+    "172.20.10.3": [
+      "out\\build\\x64-Debug",
+      "out\\install\\x64-Debug",
+      "out\\build\\Linux-GCC-Debug",
+      "out\\install\\Linux-GCC-Debug"
     ]
   },
-  "ActiveTargetSystem": "192.168.1.254",
   "ExpandedNodes": [
     ""
   ],
-  "SelectedNode": "\\main.cpp",
+  "SelectedNode": "\\DRV8825.hpp",
   "PreviewInSolutionExplorer": false
 }
