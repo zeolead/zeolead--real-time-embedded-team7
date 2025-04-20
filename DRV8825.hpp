@@ -1,3 +1,11 @@
+// Motor Driver layer
+//this layer control the motor driver
+//1. Select which motor to drive
+//2. Enable motor, shaft will become tough
+//3. Stop motor, lose power
+//4. Choose software driving mode, but we are using hardware mode all the time. It matters nothing.
+//5. Drive motor rotate at setting speed and setting steps.
+
 #ifndef DRV8825_HPP_
 #define DRV8825_HPP_
 

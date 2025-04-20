@@ -1,3 +1,11 @@
+// Motor Driver layer
+//this layer control the motor driver
+//1. Select which motor to drive
+//2. Enable motor, shaft will become tough
+//3. Stop motor, lose power
+//4. Choose software driving mode, but we are using hardware mode all the time. It matters nothing.
+//5. Drive motor rotate at setting speed and setting steps.
+
 #include "DRV8825.hpp"
 #include "Debug.hpp"    //DEBUG()
 #include<algorithm>
@@ -37,20 +45,19 @@ void DRV8825::SelectMotor(Motor& motor, UBYTE name) {
     }
 }
 
-/**
- * The motor stops rotating and the driver chip is disabled.
- *
- */
+//2. Enable motor, shaft will become tough
 void DRV8825::Enable(Motor& motor) {
     Debug::Log("Enable() called for motor %d\n", motor.Name);
     DEV_Config::DEV_Digital_Write(motor.EnablePin, 1);
 }
 
+//The motor stops rotating and the driver chip is disabled.
 void DRV8825::Stop(Motor& motor) {
     Debug::Log("Stop() called for motor %d\n", motor.Name);
     DEV_Config::DEV_Digital_Write(motor.EnablePin, 0);
 }
 
+//4. Choose software driving mode, but we are using hardware mode all the time. It matters nothing.
 void DRV8825::SetMicroStep(Motor& motor, char mode, const char* stepformat) {
     if (mode == HARDWARE) {
         Debug::Log("use hardware control\n");
@@ -73,6 +80,7 @@ void DRV8825::SetMicroStep(Motor& motor, char mode, const char* stepformat) {
     }
 }
 
+//5. Drive motor rotate at setting speed and setting steps.
 void DRV8825::TurnStep(Motor& motor, UBYTE dir, UWORD steps, UWORD stepdelay) {
     motor.Dir = dir;
     if (dir == FORWARD) {

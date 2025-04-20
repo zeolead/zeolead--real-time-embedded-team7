@@ -18,7 +18,7 @@ using UDOUBLE = uint32_t;
 class DEV_Config {
 public:
     /**
- * GPIO
+ * GPIO layer
 **/
     static constexpr int M1_ENABLE_PIN = 12;
     static constexpr int M1_DIR_PIN = 13;
