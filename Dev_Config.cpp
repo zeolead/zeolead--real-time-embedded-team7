@@ -1,9 +1,3 @@
-//GPIO layer code 
-//1. Initial gpio setting for motors
-//2. Close GPIO chip
-//3. GPIO output
-//4. Delay  It is said as ms, but actually us
-
 #include "DEV_Config.hpp"
 #include "Debug.hpp"
 #include <cstdio>
@@ -46,6 +40,8 @@ int DEV_Config::DEV_ModuleInit() {
     lgGpioClaimOutput(GPIO_Handle, 0, M2_M0_PIN, LG_LOW);
     lgGpioClaimOutput(GPIO_Handle, 0, M2_M1_PIN, LG_LOW);
     lgGpioClaimOutput(GPIO_Handle, 0, M2_M2_PIN, LG_LOW);
+    
+    Debug::Log("MOTOR DEV INIT\n");
 
     return 0;
 }

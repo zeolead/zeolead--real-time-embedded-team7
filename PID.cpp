@@ -105,6 +105,7 @@ void PID::triggerParamCallback() {
 
 void PID::receivePIDParams(float ver_kp,  float ver_kd ,float vel_kp  ,float vel_ki, float velocity )
 {
+    std::cout<<"111111"<<std::endl;
     vertical_kp = ver_kp;
     vertical_kd = ver_kd;
 

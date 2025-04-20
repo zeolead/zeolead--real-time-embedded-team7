@@ -1,6 +1,7 @@
 #include "Webservercontroller.hpp"
 #include <iostream>
 
+static std::function<void(const std::string&)> message_callback;
 Webservercontroller::Webservercontroller() : running_(false) {
     // Constructor implementation
 }
@@ -15,10 +16,15 @@ void Webservercontroller::startServer(StoreCallback storeCb) {
         return;
     }
     running_ = true;
-    control_thread_ = std::thread(&Webservercontroller::control, this, storeCb);
-}
+    control_thread_ = std::thread([this, storeCb](){
+        this-> control(storeCb);
+        });
+    }
 void Webservercontroller::startServer() {
-    startServer([](const std::string&){});
+    startServer(message_callback);
+}
+void Webservercontroller::setMessageCallback(StoreCallback cb) {
+    message_callback = std::move(cb);
 }
 void Webservercontroller::stopServer() {
     std::lock_guard<std::mutex> lock(mutex_);
@@ -34,12 +40,13 @@ void Webservercontroller::stopServer() {
     }
     std::cout << "Server stopped\n";
 }
-void Webservercontroller::Run(StoreCallback storeCb) {
+void Webservercontroller::RunServer(StoreCallback storeCb) {
     control(storeCb);
 }
 
 void Webservercontroller::control(StoreCallback storeCb) {
     ws_server.init_asio();
+    std::cout << "initializing\n";
     ws_server.listen(8765);
     ws_server.start_accept();
     ws_server.set_message_handler(
@@ -64,3 +71,4 @@ void Webservercontroller::on_message(websocketpp::connection_hdl hdl,
                    "Ack: " + msg->get_payload(),
                    websocketpp::frame::opcode::text);
 }
+

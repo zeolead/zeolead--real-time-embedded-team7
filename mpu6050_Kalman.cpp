@@ -31,21 +31,18 @@ MPU6050::MPU6050()
     : file(-1), ay_offset(0), az_offset(0), gx_offset(0), running_(false) {}  // Initialize the I2C file descriptor
 
 // Destructor
-MPU6050::~MPU6050() 
-{
+MPU6050::~MPU6050() {
     stop();
     if (file >= 0) close(file);
 }
 
-void MPU6050::stop() 
-{
+void MPU6050::stop() {
     std::lock_guard<std::mutex> lock(data_mutex);
     running_ = false;
 }
 
 // Read a 16-bit word from I2C bus
-int16_t MPU6050::i2c_read_word(int fd, int addr) 
-{
+int16_t MPU6050::i2c_read_word(int fd, int addr) {
     unsigned char buf[2];
     buf[0] = addr;
     if (write(fd, buf, 1) != 1) return -1;
@@ -54,8 +51,7 @@ int16_t MPU6050::i2c_read_word(int fd, int addr)
 }
 
 // Kalman Filter structure
-typedef struct KalmanFilter 
-{
+typedef struct KalmanFilter {
     float Q_angle;   // Process noise variance for the accelerometer (angle change)
     float Q_gyro;    // Process noise variance for the gyro drift
     float R_angle;   // Measurement noise variance (accelerometer)
@@ -64,15 +60,13 @@ typedef struct KalmanFilter
     float P[2][2];   // Error covariance matrix
 
     KalmanFilter(float Q_angle, float Q_gyro, float R_angle)
-        : Q_angle(Q_angle), Q_gyro(Q_gyro), R_angle(R_angle), angle(0), bias(0) 
-    {
+        : Q_angle(Q_angle), Q_gyro(Q_gyro), R_angle(R_angle), angle(0), bias(0) {
         P[0][0] = 1; P[0][1] = 0;
         P[1][0] = 0; P[1][1] = 1;
     }
 
     // Update the Kalman filter
-    float update(float newAngle, float newRate, float dt) 
-    {
+    float update(float newAngle, float newRate, float dt) {
         // Prediction step
         angle += dt * (newRate - bias);
         P[0][0] += dt * (dt * P[1][1] - P[0][1] - P[1][0] + Q_angle);
@@ -100,27 +94,23 @@ typedef struct KalmanFilter
 } KalmanFilter;
 
 // Low-pass filter
-float MPU6050::low_pass_filter(float new_data, float old_data, float alpha) 
-{
+float MPU6050::low_pass_filter(float new_data, float old_data, float alpha) {
     return alpha * new_data + (1.0f - alpha) * old_data;
 }
 
-void MPU6050::run() 
-{
+void MPU6050::run() {
     {
         std::lock_guard<std::mutex> lock(data_mutex);
         running_ = true;
     }
     // Open I2C device
     file = open("/dev/i2c-1", O_RDWR);
-    if (file < 0) 
-    {
+    if (file < 0) {
         std::cerr << "Unable to open I2C device" << std::endl;
         return;
     }
     // Connect to MPU6050
-    if (ioctl(file, I2C_SLAVE, MPU6050_ADDR) < 0) 
-    {
+    if (ioctl(file, I2C_SLAVE, MPU6050_ADDR) < 0) {
         std::cerr << "Unable to connect to MPU6050" << std::endl;
         close(file);
         return;
@@ -138,8 +128,7 @@ void MPU6050::run()
     float ay_offset = 0.0, az_offset = 0.0;
     float gx_offset = 0.0;
     const int num_samples = 100;
-    for (int i = 0; i < num_samples; i++) 
-    {
+    for (int i = 0; i < num_samples; i++) {
         ay_offset += i2c_read_word(file, ACCEL_YOUT_H) / 16384.0;
         az_offset += i2c_read_word(file, ACCEL_ZOUT_H) / 16384.0;
         gx_offset += i2c_read_word(file, GYRO_XOUT_H) / 131.0;
@@ -151,15 +140,14 @@ void MPU6050::run()
 
     // Initialize Kalman filter and timing
     KalmanFilter Kalman_pitch(0.03, 0.05, 0.01);
-    float dt = 0.01;  // Time interval 10ms
+    float dt = 0.005;  // Time interval 5ms
 
     // Initialize data containers (records time, filtered pitch, and accel pitch)
     auto start_time = std::chrono::steady_clock::now();
     std::vector<double> timeVec, pitchVec, accelPitchVec;
 
     // Collect data for 20 seconds
-    while (true) 
-    {
+    while (true) {
         {
             std::lock_guard<std::mutex> lock(data_mutex);
             if (!running_) break;
@@ -167,8 +155,7 @@ void MPU6050::run()
         // Calculate elapsed time in seconds
         auto current_time = std::chrono::steady_clock::now();
         double elapsed = std::chrono::duration<double>(current_time - start_time).count();
-        // if (elapsed >= 20.0) 
-        // {
+        // if (elapsed >= 20.0) {
         //     break;
         // }
 
@@ -213,7 +200,7 @@ void MPU6050::run()
         // usleep(10000);  // Delay 10ms
     }
 
-    //Output the calculated pitch and the forward/backward acceleration (ay)
+    //Output the calculated pitch and the forward/backward acceleration (ax)
     //    std::lock_guard<std::mutex> guard(data_mutex);  // Mutex to protect shared std::cout
     //    std::cout << "Pitch: " << pitch << "°  F/B acceleration (ay): " << ay << " g" << std::endl;
     //    std::cout << "gx: " << gx << "  a_p " << accel_pitch << std::endl;
@@ -222,8 +209,7 @@ void MPU6050::run()
     
     // After collection, call gnuplot to plot the graph
     // FILE* gp = popen("gnuplot -persistent", "w");
-    // if (!gp) 
-    // {
+    // if (!gp) {
     //     std::cerr << "Error: could not open gnuplot." << std::endl;
     // } else {
     //     fprintf(gp, "set title 'Pitch and Accel_Pitch vs Time'\n");
@@ -234,15 +220,13 @@ void MPU6050::run()
     //     fprintf(gp, "plot '-' with lines title 'Filtered Pitch', '-' with lines title 'Accel Pitch'\n");
 
     //     // Send first data set (time and filtered pitch)
-    //     for (size_t i = 0; i < timeVec.size(); i++) 
-    //     {
+    //     for (size_t i = 0; i < timeVec.size(); i++) {
     //         fprintf(gp, "%f %f\n", timeVec[i], pitchVec[i]);
     //     }
     //     fprintf(gp, "e\n");
 
     //     // Send second data set (time and accel_pitch)
-    //     for (size_t i = 0; i < timeVec.size(); i++) 
-    //     {
+    //     for (size_t i = 0; i < timeVec.size(); i++) {
     //         fprintf(gp, "%f %f\n", timeVec[i], accelPitchVec[i]);
     //     }
     //     fprintf(gp, "e\n");
@@ -253,14 +237,12 @@ void MPU6050::run()
     close(file);
 }
 
-void MPU6050::setCallback(const std::function<void(float, float)>& cb) 
-{
+void MPU6050::setCallback(const std::function<void(float, float)>& cb) {
     std::lock_guard<std::mutex> lock(data_mutex);
     callback = cb;
 }
 
-int sensor_start() 
-{
+int sensor_start() {
     MPU6050 sensor;  // Create an MPU6050 object
     // Start a new thread to run the sensor data reading and processing
     std::thread sensor_thread(&MPU6050::run, &sensor);

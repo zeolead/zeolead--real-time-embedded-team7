@@ -13,6 +13,7 @@ add_executable(PID
     MotorControl.cpp
     DRV8825.cpp
     Dev_Config.cpp
+    Webservercontroller.cpp
 )
 
 set(HEADER_FILES
@@ -22,6 +23,7 @@ set(HEADER_FILES
     DRV8825.hpp
     DEV_Config.hpp
     Debug.hpp	
+    Webservercontroller.hpp
 )
 
 # 设置 include 目录（可以加多个）

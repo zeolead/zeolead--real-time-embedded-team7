@@ -18,16 +18,16 @@ public:
 
     void setParamCallback(std::function<void()> callback);
     void triggerParamCallback();
-    void receivePIDParams(float vertical_kp,  float vertical_kd ,float velocity_kp  ,float velocity_ki, float target_velocity )
+    void receivePIDParams(float vertical_kp,  float vertical_kd ,float velocity_kp  ,float velocity_ki, float target_velocity );
 private:
     std::function<void()> paramCallback;
     std::function<void(float)> outputCallback;
     float current_pitch = 0.0f;
-    float vertical_kp; 
-    float vertical_kd;
-    float velocity_kp;
-    float velocity_ki ;
-    float target_velocity ;
+    float vertical_kp=3.0; 
+    float vertical_kd=0.8;
+    float velocity_kp=2.0;
+    float velocity_ki=0.05;
+    float target_velocity=0;
 };
 
 #endif // PID_HPP
