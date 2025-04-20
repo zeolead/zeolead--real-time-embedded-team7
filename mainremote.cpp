@@ -1,91 +1,149 @@
 #include <iostream>
 #include <thread>
+#include <mutex>
+#include <cmath>
 #include <csignal>
+#include <unistd.h>
 #include <atomic>
-#include <chrono>
-
 #include "mpu6050_Kalman.hpp"
 #include "PID.hpp"
 #include "MotorControl.hpp"
 #include "Webservercontroller.hpp"
-
-// 全局退出标志
 static std::atomic<bool> quit{false};
-
-// CTRL+C 信号处理
-void Handler(int) {
-    std::cout << "\nManual stop\n";
+void Handler(int sig) {
+    std::cout << "\nHandler: Manual Stop" << std::endl;
     DEV_Config::DEV_ModuleExit();
     quit = true;
 }
+int casenumber(const std :: string& cmd){
+        if (cmd == "forward") return 0;
+        if (cmd == "backward") return 1;
+        if (cmd == "left") return 2;
+        if (cmd == "right") return 3;
+        if (cmd == "stop") return 4;
+        return -1;
+        }
 
-int casenumber(const std::string& cmd){
-    if (cmd=="forward")  return 0;
-    if (cmd=="backward") return 1;
-    if (cmd=="left")     return 2;
-    if (cmd=="right")    return 3;
-    if (cmd=="stop")     return 4;
-    return -1;
-}
 
-int main(){
-    // 安装信号
+int main() {
     std::signal(SIGINT, Handler);
+    Webservercontroller server;
+    std::string lastMsg;
 
-    // 1. 硬件初始化
-    if (DEV_Config::DEV_ModuleInit()) return 1;
-
+    std::cout <<"received" << lastMsg << std::endl;   
+    //Webservercontroller server;
+    //std::string lastMsg;
+    //server.control([&](const std::string& m){
+    //      lastMsg = m;
+    //std::cout <<"514" << lastMsg << std::endl;
+    //    });
+    
+    //std::this_thread::sleep_for(std::chrono::hours(24));
+    
+    int turn1=0;
+    int turn2=0;
+    
+    if (DEV_Config::DEV_ModuleInit()) {
+        return 0;
+    }
+    std::signal(SIGINT,Handler);
+    
+    
     MPU6050 mpu;
     PID pid;
+
     MotorControl motor1(DRV8825::MOTOR1);
     MotorControl motor2(DRV8825::MOTOR2);
+    
+    
 
-    // 1.1 传感器 → PID
-    mpu.setCallback([&](float pitch, float ax){
-        pid.receiveSensorData(pitch, ax);
+    mpu.setCallback([&](float pitch, float ax) {
+        pid.receiveSensorData(pitch, ax); 
+         
     });
-
-    // 1.2 PID → 电机
-    pid.setOutputCallback([&](float output){
+    
+    pid.setOutputCallback([&](float output) {
         int rpm = static_cast<int>(output);
-        motor1.setRPM(rpm);
-        motor2.setRPM(-rpm);
+        motor1.setRPM(rpm+turn1);
+        motor2.setRPM(-rpm+turn2);
+       
     });
-
-    // 1.3 启动线程
-    std::thread mpuThread(&MPU6050::run, &mpu);
+    server.setMessageCallback([&lastMsg](const std::string& msg){
+        lastMsg = msg;
+        std::cout <<"received message" << lastMsg << std::endl;
+    }       
+        server.startServer(const std::string& msg)
+        
+        
+    };   
+    int command =casenumber(lastMsg);
+    std::cout <<"COMMAND" << lastMsg << std::endl;   
+    
+    switch (command)
+    {
+        case 0:
+            turn1=0;
+            turn2=0;
+            pid.setParamCallback([&](){
+                pid.receivePIDParams(0.3f, 0.1f, 0.2f, 0.05f, 3.0f);
+                std::cout<<"111111"<<std::endl;
+            });
+            break; 
+                
+        case 1:
+            turn1=0;
+            turn2=0;
+            pid.setParamCallback([&](){
+                pid.receivePIDParams(0.3f, 0.1f, 0.2f, 0.05f, -3.0f);
+                std::cout<<"111111"<<std::endl;
+            });
+            break;  
+                
+        case 2:
+            turn1=5;
+            turn2=0;
+            pid.setParamCallback([&](){
+                pid.receivePIDParams(0.3f, 0.1f, 0.2f, 0.05f, 3.0f);
+                std::cout<<"111111"<<std::endl;
+            });
+            break; 
+                
+        case 3:
+            turn1=0;
+            turn2=5;
+            pid.setParamCallback([&](){
+                pid.receivePIDParams(0.3f, 0.1f, 0.2f, 0.05f, 3.0f);
+                std::cout<<"111111"<<std::endl;
+            });
+            break; 
+                
+        case 4:
+            turn1=0;
+            turn2=0;
+            pid.setParamCallback([&](){
+                pid.receivePIDParams(0.3f, 0.1f, 0.2f, 0.05f, 0.0f);
+                std::cout<<"111111"<<std::endl;
+            });
+            break; 
+        default:
+            std::cout<<"error"<<std::endl;
+            break;
+    }
+    pid.triggerParamCallback();
     motor1.start();
     motor2.start();
 
-    // 2. 启动 WebSocket 服务
-    Webservercontroller server;
-    server.startServer([&](const std::string& msg){
-        int cmd = casenumber(msg);
-        switch(cmd){
-          case 0: pid.receivePIDParams(0.3f,0.1f,0.2f,0.05f,  3.0f); break;
-          case 1: pid.receivePIDParams(0.3f,0.1f,0.2f,0.05f, -3.0f); break;
-          case 2: /* 左转 */ break;
-          case 3: /* 右转 */ break;
-          case 4: pid.receivePIDParams(0.3f,0.1f,0.2f,0.05f,  0.0f); break;
-          default: std::cerr<<"Unknown cmd\n"; break;
-        }
-        std::cout<<"recv: "<<msg<<std::endl;
-    });
-
-    std::cout<<"Server up, motors spinning...\n";
-
-    // 3. 等待退出
-    while(!quit){
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    }
-
-    // 4. 优雅收尾
+    std::thread mpuThread(&MPU6050::run, &mpu);
+    mpuThread.join(); 
     server.stopServer();
-    mpu.stop();          // 假设你的 MPU 类提供停止接口
-    if(mpuThread.joinable()) mpuThread.join();
-    motor1.stop();       // 如果有 stop
-    motor2.stop();
-
-    std::cout<<"Exited cleanly\n";
-    return 0;
+ 
+    //while(!quit){
+    //std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    //} 
+    std::cout << "close system" << std::endl;
+    
+    std::cout <<"server stopped" << lastMsg << std::endl;
+    return 0; 
 }
+
+
