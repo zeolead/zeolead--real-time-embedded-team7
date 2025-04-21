@@ -1,6 +1,7 @@
 WebSocket Segway
 ======
-![image](https://github.com/zeolead/zeolead--real-time-embedded-team7/blob/main/Software%20Structure%20Design.jpg)
+![image](https://github.com/zeolead/zeolead--real-time-embedded-team7/blob/main/WebSocket%20Segway.jpg)
+
 Studying the dynamic balance of a vehicle on two wheels is essential for future research on the dynamic stability of robots and forms the foundation for understanding and mastering complex robotics technologies.
 
 Current situation: All system works well. This segway could not develop further unless it has a independent power source.
