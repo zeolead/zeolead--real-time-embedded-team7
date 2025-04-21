@@ -39,6 +39,9 @@ Below is an overview of the main source files in this project:
 - All team members can remotely access the Pi from our devices.
 - All ordered hardware components have arrived.
 
+### March 12, 2025 (Wednesday)
+- Setting up Bluetooth structure on Windows.
+
 ### March 13, 2025 (Thursday)
 - All components have been soldered.
 - Hardware connections are complete. Now moving on to software development and debugging.
@@ -49,9 +52,18 @@ Below is an overview of the main source files in this project:
 - Initial motor control implemented; motor response testing has begun.
 - Basic implementation of the PID control algorithm completed.
 
+### March 19, 2025 (Wednesday)
+- Changed to Websocket connection for only JavaScript development is allowed on the PC side.
+
+### March 23, 2025 (Sunday)
+- Completed the design of the web interface.
+
 ### April 1, 2025 (Tuesday)
 - Chassis assembly completed; all modules are mounted.
 - Project enters debugging phase in preparation for the first autonomous run test.
+
+### April 6, 2025 (Sunday)
+- Finished writing the backend code for the web interface.
 
 ### April 7, 2025 (Monday)
 - Significant mismatch between sensor tilt angle data and actual motion.
@@ -75,6 +87,7 @@ Below is an overview of the main source files in this project:
 - Retuned complementary filter to improve angle accuracy.
 - Discovered sensor output delay and sluggish response.
 - The robot can stand upright but shows oscillation at rest, and no forward movement occurs.
+- Connected to the server on Raspberry PI.
 
 ### April 14, 2025 (Monday)
 - Replaced complementary filter with Kalman filter to fix data latency.
@@ -87,11 +100,12 @@ Below is an overview of the main source files in this project:
 
 ### April 17, 2025 (Thursday)
 - Attempted to upgrade power supply using a power bank; voltage found to be insufficient.
-- *(To be continued)*
 
 ### April 18, 2025 (Friday)
 - Tried using a boost converter with the power bank, but encountered instability. Reverted to the original stable power socket setup.
-- *(To be continued)*
+
+### April 19, 2025 (Saturday)
+- Designed and implemented the server-side threading model.
 
 
 ---
