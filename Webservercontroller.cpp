@@ -71,4 +71,13 @@ void Webservercontroller::on_message(websocketpp::connection_hdl hdl,
                    "Ack: " + msg->get_payload(),
                    websocketpp::frame::opcode::text);
 }
+// The original control() function was used for testing server connectivity. 
+// The overloaded version control(StoreCallback storeCb) could return commands, 
+// but did not meet the overall program requirements.
+//
+// Therefore, startServer(StoreCallback storeCb) was added. However, this version 
+// still used a blocking thread, which interfered with the main program execution.
+//
+// Finally, a parameterless startServer() and setMessageCallback() were introduced 
+// to enable message sending and receiving without blocking the main thread.
 
