@@ -1,6 +1,19 @@
 WebSocket Segway / Remote-Controlled Segway
 ======
 Studying the dynamic balance of a vehicle on two wheels is essential for future research on the dynamic stability of robots and forms the foundation for understanding and mastering complex robotics technologies.
+## File Introduction
+
+Below is an overview of the main source files in this project:
+
+- **`main.cpp`**: Program entry point. Handles module initialization, signal handling, launching the MPU6050 sensor thread, PID control thread, WebSocket server thread, and motor control threads.
+- **`PID.hpp` / `PID.cpp`**: PID control algorithm implementation. Contains the tilt-angle loop (`Vertical`) and velocity loop (`Velocity`), integrates Kalman-filtered IMU input, velocity estimation, and supports dynamic parameter updates.
+- **`mpu6050_Kalman.hpp` / `mpu6050_Kalman.cpp`**: IMU data acquisition and Kalman filter fusion for the MPU6050 sensor. Implements I2C communication, low-pass filtering, bias calibration, and real-time orientation estimation.
+- **`MotorControl.hpp` / `MotorControl.cpp`**: Thread-safe stepper motor control wrapper. Provides RPM setting, direction control, step pulse generation, and status/step callback interfaces.
+- **`DRV8825.hpp` / `DRV8825.cpp`**: Abstraction for the DRV8825 stepper motor driver. Configures microstepping, enable/disable, direction, and step pulses using `DEV_Config` for low-level GPIO operations.
+- **`DEV_Config.hpp` / `Dev_Config.cpp`**: Raspberry Pi GPIO initialization and control utilities. Detects board version, claims GPIO pins, and provides millisecond/microsecond delay functions.
+- **`Webservercontroller.hpp` / `Webservercontroller.cpp`**: Remote control module based on WebSocket++. Handles server setup, incoming message callbacks, and integration with the main control logic.
+- **`CMakeLists.txt`**: Build script. Specifies C++ standard, executable targets, source files, and links against `pthread` and `lgpio` libraries.
+- **`Debug.hpp`**: Debug logging utility. Offers optional printouts for runtime diagnostics across modules.
 ## Key Features
 >* Real-time Tilt Angle Monitoring
 >* PID Control Algorithm
@@ -75,3 +88,10 @@ Studying the dynamic balance of a vehicle on two wheels is essential for future 
 ### April 18, 2025 (Friday)
 - Tried using a boost converter with the power bank, but encountered instability. Reverted to the original stable power socket setup.
 - *(To be continued)*
+
+# WebSocket Segway / Remote-Controlled Segway
+
+Studying the dynamic balance of a two-wheeled vehicle is essential for advancing research on robotic stability and forms the foundation for more complex dynamic control in robotics.
+
+---
+
