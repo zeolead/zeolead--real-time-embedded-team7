@@ -15,37 +15,20 @@ using server_t = websocketpp::server<websocketpp::config::asio> ;
 class Webservercontroller {
   
     public:
-    Webservercontroller();
-    ~Webservercontroller();
-    void startServer(StoreCallback storeCb);
-    void startServer();
-    void stopServer(); 
-    void control(StoreCallback storeCb); 
+    Webservercontroller();//constructor
+    ~Webservercontroller();//destructor
+    void startServer(StoreCallback storeCb);//start the server with a callback function
+    void startServer();//start the server without a callback function
+    void stopServer(); //stop the server
+    void control(StoreCallback storeCb); //Read data from the client (blocks until data is received)
     void control();
-    //{
-            // initialize the server
-           // ws_server.init_asio();
-           // ws_server.listen(8765);
-           // ws_server.start_accept();
-           // ws_server.set_message_handler([this, storeCb](websocketpp::connection_hdl hdl, server_t::message_ptr msg) {
-           //     on_message(hdl, msg);
-           //     storeCb(msg->get_payload());
-           // });
-           // std::cout << "Server started on port 8765" << std::endl;
-           // ws_server.run();
-    //    }
-        
-    void setMessageCallback(StoreCallback cb);
+    void setMessageCallback(StoreCallback cb);//register the callback function
     
     private:
 
-        void RunServer(StoreCallback storeCb);
+        void RunServer(StoreCallback storeCb);//Call the function without creating a new thread
         server_t ws_server; 
-        void on_message(websocketpp::connection_hdl hdl, server_t::message_ptr msg); 
-       // void on_message(websocketpp::connection_hdl hdl, server_t::message_ptr msg) 
-           // std::cout << "Received message: " << msg->get_payload() << std::endl;
-            //std::string command = msg->get_payload();
-           // std::cout << "Executing command: " << command << std::endl;
+        void on_message(websocketpp::connection_hdl hdl, server_t::message_ptr msg); //reply to the client
         std::thread control_thread_;    
         std::mutex mutex_;    
         bool running_;
