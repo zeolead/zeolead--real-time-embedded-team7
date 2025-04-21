@@ -32,7 +32,7 @@ Below is an overview of the main source files in this project:
 ## Software Structure Design
 ![image](https://github.com/zeolead/zeolead--real-time-embedded-team7/blob/main/Software%20Structure%20Design.jpg)
 
-## 🗓️ Project Progress Log
+## Project Progress Log
 
 ### February 27, 2025 (Thursday)
 - Successfully flashed the Raspberry Pi OS.
@@ -107,6 +107,9 @@ Below is an overview of the main source files in this project:
 ### April 19, 2025 (Saturday)
 - Designed and implemented the server-side threading model.
 
+## Want to see more?
+We share extra project updates, behind-the-scenes content, and little surprises on Instagram —— don't miss out!
+Follow us: @2990788f
 
 ---
 
