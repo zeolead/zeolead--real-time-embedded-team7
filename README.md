@@ -1,6 +1,8 @@
 WebSocket Segway / Remote-Controlled Segway
 ======
 Studying the dynamic balance of a vehicle on two wheels is essential for future research on the dynamic stability of robots and forms the foundation for understanding and mastering complex robotics technologies.
+
+Current situation: All system works well. This segway could not develop further unless it has a independent power source.
 ## File Introduction
 
 Below is an overview of the main source files in this project:
