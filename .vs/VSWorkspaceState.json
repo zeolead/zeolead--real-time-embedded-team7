@@ -1,6 +1,5 @@
 {
   "DevContainersInfoBarHidden": true,
-  "ActiveTargetSystem": "172.20.10.3",
   "OutputFoldersPerTargetSystem": {
     "Local Machine": [
       "out\\build\\x64-Debug",
@@ -21,9 +20,10 @@
       "out\\install\\Linux-GCC-Debug"
     ]
   },
+  "ActiveTargetSystem": "192.168.1.254",
   "ExpandedNodes": [
     ""
   ],
-  "SelectedNode": "\\DRV8825.hpp",
+  "SelectedNode": "\\MotorControl.cpp",
   "PreviewInSolutionExplorer": false
 }

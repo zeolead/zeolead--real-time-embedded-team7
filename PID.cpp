@@ -17,7 +17,7 @@ std::deque<float> pitch_history;
 constexpr float wheel_radius = 4;
 
 
-float PID::Vertical(float angle_output, float pitch, float ax)// 期望角度，真实角度，角速度
+float PID::Vertical(float angle_output, float pitch, float ax)// tatget pitch，current pitch，pitch speed
 {
     // below is the code to estimate pitch rotation speed, to join the D part of algorithm
     pitch_history.push_back(pitch);
@@ -73,26 +73,28 @@ float PID::Velocity()
     // slow the update of the velocity
 
     estimated_velocity = wheel_radius * (2 * M_PI * RPM / 60 + 2 * M_PI * pitch_angvol / 360);
+    std::cout << "estimated_velocity: " << estimated_velocity << std::endl;
     float error = target_velocity - estimated_velocity;
     // dead zone limit
-    if (std::abs(error) < 0.5f) {
+    if (std::abs(error) < 0.1f) {
         error = 0;
     }
-    std::cout << "estimated_velocity:" << estimated_velocity << "\n  pitch speed" << pitch_angvol << std::endl;
 
-    float a = 0.97;
+    float a = 0.975;
     int Err = error;
     int Err_lowout = (1 - a) * Err + a * Err_lowout_last;
     Err_lowout_last = Err_lowout;
     //limit intergrater
-    intergate_save += 0.5 * Err_lowout;
-    if (intergate_save > 20000)
-        intergate_save = 20000;
-    if (intergate_save < -20000)
-        intergate_save = -20000;
+    intergate_save +=  Err_lowout;
+    if (intergate_save > 10000)
+        intergate_save = 10000;
+    if (intergate_save < -10000)
+        intergate_save = -10000;
 
     float angle_output = velocity_kp * Err_lowout + velocity_ki * intergate_save;
-    std::cout << "target angle" << angle_output << std::endl;
+    //std::cout << "Err_lowout: " << Err_lowout << std::endl;
+    //std::cout << "intergate_save: " << intergate_save << std::endl;
+    //std::cout << "target angle" << angle_output << std::endl;
     if (target_velocity != 0.0f && std::abs(estimated_velocity) < 0.1f && std::abs(angle_output) < 1.0f) {
         angle_output = (target_velocity > 0) ? 2.0f : -2.0f; 
 

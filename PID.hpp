@@ -28,8 +28,8 @@ private:
     float current_pitch = 0.0f;
     float vertical_kp=3.0; 
     float vertical_kd=0.02;
-    float velocity_kp=1.0;
-    float velocity_ki=0.0005;
+    float velocity_kp=0.0;
+    float velocity_ki=0.001;
     float target_velocity=0;
 
     float pitch_angvol = 0.0f;

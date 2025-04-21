@@ -57,14 +57,14 @@ void MotorControl::setRPM(float rpm) {
 	std::lock_guard<std::mutex> lock(mutex_);
 	if (rpm >= 0) {
 		direction_ = DRV8825::FORWARD;
+		rpm_ = rpm;
 	}
 	else {
 		direction_ = DRV8825::BACKWARD;
-		rpm = -rpm; 
+		rpm_ = -rpm; 
 	}
-	rpm_ = rpm;
 	Debug::Log("set rpm %f  (dir %d) for motor %d\n", rpm, direction_.load(), motor_id_);
-	if (statusCallback_) statusCallback_(direction_, static_cast<int>(rpm_));
+	if (statusCallback_) statusCallback_(direction_, static_cast<int>(rpm));
 }
 
 // not used
