@@ -93,9 +93,6 @@ Below is an overview of the main source files in this project:
 - Tried using a boost converter with the power bank, but encountered instability. Reverted to the original stable power socket setup.
 - *(To be continued)*
 
-# WebSocket Segway / Remote-Controlled Segway
-
-Studying the dynamic balance of a two-wheeled vehicle is essential for advancing research on robotic stability and forms the foundation for more complex dynamic control in robotics.
 
 ---
 
